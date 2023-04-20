@@ -31,7 +31,7 @@ client.player = new DisTube(client, {
     new SpotifyPlugin(),
     new SoundCloudPlugin(),
     new YtDlpPlugin(),
-    new DeezerPlugin()
+    new DeezerPlugin(),
   ],
 });
 
@@ -91,21 +91,22 @@ if (config.TOKEN || process.env.TOKEN) {
   }, 2000);
 }
 
-
-if(config.mongodbURL || process.env.MONGO){
-  const mongoose = require("mongoose")
-  mongoose.connect(config.mongodbURL || process.env.MONGO, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  }).then(async () => {
-    console.log(`Connected MongoDB`)
-  }).catch((err) => {
-    console.log("\nMongoDB Error: " + err + "\n\n" + lang.error4)
+if (config.mongodbURL || process.env.MONGO) {
+  const mongoose = require("mongoose");
+  mongoose
+    .connect(config.mongodbURL || process.env.MONGO, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
     })
-  } else {
-  console.log(lang.error4)
-  }
-
+    .then(async () => {
+      console.log(`Connected MongoDB`);
+    })
+    .catch((err) => {
+      console.log("\nMongoDB Error: " + err + "\n\n" + lang.error4);
+    });
+} else {
+  console.log(lang.error4);
+}
 
 const express = require("express");
 const app = express();
