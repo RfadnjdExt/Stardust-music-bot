@@ -2,7 +2,7 @@
 ![](https://cdn.discordapp.com/avatars/817408723571179550/60b1c33abe9ebdd915b2b8fc1234d367.webp?size=1024)
 
 
-## Tentang bot
+## Tentang bot:
 - Keseruan mendengarkan musik tanpa henti 24/7.
 - Perintah yang dapat disesuaikan.
 - Kesempatan untuk mengatur role DJ yang dapat disesuaikan.
@@ -27,14 +27,14 @@
 ## Filter audio kustom:
 3d, bassboost, echo, karaoke, nightcore, vaporwave, flanger, gate, haas, reverse, surround, mcompand, phaser, tremolo, earwax
 
-## Penyiapan Bot
+## Penyiapan Bot:
 
 - [Pasang node dan npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm#using-a-node-version-manager-to-install-nodejs-and-npm)
 - Kloning repositori ini atau unduh sebagai zip dan ekstrak isinya.
 - Ubah `config.sample.js` menjadi `config.js` dan masukkan bot token, dan lain-lain sesuai kebutuhan Anda.
 - Jalankan command `npm install`.
 
-### Tautan
+### Tautan:
 
 - [Fork Replit](https://replit.com/)
 
