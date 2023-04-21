@@ -27,7 +27,7 @@
 ## Filter audio kustom:
 3d, bassboost, echo, karaoke, nightcore, vaporwave, flanger, gate, haas, reverse, surround, mcompand, phaser, tremolo, earwax
 
-## Penyiapan Bot:
+## Penyiapan bot:
 
 - [Pasang node dan npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm#using-a-node-version-manager-to-install-nodejs-and-npm)
 - Kloning repositori ini atau unduh sebagai zip dan ekstrak isinya.
