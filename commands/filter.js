@@ -95,7 +95,7 @@ module.exports = {
         .setColor(client?.config?.embedColor)
         .setTitle("Select a filter.")
         .setTimestamp()
-        .setFooter({ text: `MusicMaker ❤️` });
+        .setFooter({ text: client.user.username });
       interaction
         .reply({ embeds: [embed], components: [buttons, buttons2, buttons3] })
         .then(async (Message) => {
@@ -179,7 +179,7 @@ module.exports = {
                 .setColor(client?.config?.embedColor)
                 .setTitle("Time ended.")
                 .setTimestamp()
-                .setFooter({ text: `MusicMaker ❤️` });
+                .setFooter({ text: client.user.username });
 
               await interaction
                 ?.editReply({ embeds: [embed], components: [] })

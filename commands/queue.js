@@ -171,7 +171,7 @@ module.exports = {
               )
               .setColor(client.config.embedColor)
               .setDescription(lang.msg70)
-              .setFooter({ text: `MusicMaker ❤️` });
+              .setFooter({ text: client.user.username });
             return interaction
               ?.editReply({ embeds: [embed], components: [button] })
               .catch((e) => {});

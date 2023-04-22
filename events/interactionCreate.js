@@ -125,7 +125,7 @@ module.exports = async (client, interaction) => {
                                     )
                                 )
                                 .setTimestamp()
-                                .setFooter({ text: `MusicMaker ❤️` });
+                                .setFooter({ text: client.user.username });
                               return interaction
                                 ?.reply({ embeds: [embed], ephemeral: true })
                                 .catch((e) => {});
@@ -278,7 +278,7 @@ module.exports = async (client, interaction) => {
                 .setDescription(
                   `**${queue?.formattedCurrentTime} / ${queue?.formattedDuration} (${music_percent3}%)**`
                 )
-                .setFooter({ text: `MusicMaker ❤️` });
+                .setFooter({ text: client.user.username });
               interaction?.message?.edit({ embeds: [embed] }).catch((e) => {});
               interaction
                 ?.reply({

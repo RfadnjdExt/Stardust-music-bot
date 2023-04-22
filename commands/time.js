@@ -41,7 +41,7 @@ module.exports = {
         .setDescription(
           `**${queue.formattedCurrentTime} / ${queue.formattedDuration} (${music_percent3}%)**`
         )
-        .setFooter({ text: `MusicMaker ❤️` });
+        .setFooter({ text: client.user.username });
       interaction
         .reply({ embeds: [embed], components: [row] })
         .catch((e) => {});

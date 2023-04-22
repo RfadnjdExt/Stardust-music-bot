@@ -21,7 +21,7 @@ const language = {
     msg12: "ditambahkan ke daftar putar musik Anda.",
    error3: "Kesalahan memuat ulang aplikasi [/] perintah: ",
    error4: "PERINGATAN: Sepertinya Anda tidak menulis url mongodb? Jika Anda tidak memasukkan url mongodb yang valid di file config.js, Anda tidak akan dapat menggunakan bot.",
-   msg13: `🎵 Sedang diputar: **{track?.title}** -> Channel: **{queue?.connection.channel.name}** 🎧`,
+   msg13: `🎵 Sedang diputar: **{track?.title}** -> Kanal: **{queue?.connection.channel.name}** 🎧`,
    msg14: "Antrian kosong. Anda dapat memutar musik lagi, byebye... ✅",
    msg15: "Saya memutuskan sambungan karena tidak ada lagi saluran saya. ❌",
    msg16: "Saya mengalami masalah saat menghubungkan ke saluran suara. ❌ Seperti seseorang memutuskan hubungan saya? Saya sangat sedih. 😔",

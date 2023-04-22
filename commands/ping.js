@@ -29,7 +29,7 @@ module.exports = {
               },
             ])
             .setTimestamp()
-            .setFooter({ text: `Hylyh` });
+            .setFooter({ text: client.user.username });
           return interaction.editReply({ embeds: [embed] }).catch((e) => {});
         })
         .catch((err) => {});

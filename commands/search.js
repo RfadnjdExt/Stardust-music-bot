@@ -102,7 +102,7 @@ module.exports = {
         )}`
       );
       embed.setTimestamp();
-      embed.setFooter({ text: `codeshare.me | Umut Bayraktar ❤️` });
+      embed.setFooter({ text: client.user.username });
 
       let code;
       if (buttons1 && buttons2) {

@@ -42,7 +42,7 @@ module.exports = {
         .setTitle(lang.msg38)
         .setDescription(lang.msg39)
         .setTimestamp()
-        .setFooter({ text: `MusicMaker ❤️` });
+        .setFooter({ text: client.user.username });
       interaction
         ?.reply({ embeds: [embed], components: [button], fetchReply: true })
         .then(async (Message) => {
@@ -104,7 +104,7 @@ module.exports = {
               .setColor(client.config.embedColor)
               .setTitle(lang.msg46)
               .setTimestamp()
-              .setFooter({ text: `MusicMaker ❤️` });
+              .setFooter({ text: client.user.username });
 
             await interaction
               ?.editReply({

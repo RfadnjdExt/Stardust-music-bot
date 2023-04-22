@@ -55,7 +55,7 @@ module.exports = {
             },
           ])
           .setTimestamp()
-          .setFooter({ text: `MusicMaker ❤️` });
+          .setFooter({ text: client.user.username });
         interaction.reply({ embeds: [embed] }).catch((e) => {});
       }
     } catch (e) {

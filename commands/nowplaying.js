@@ -46,7 +46,7 @@ module.exports = {
 > By: <@${track.user.id}>`);
 
       embed.setTimestamp();
-      embed.setFooter({ text: `MusicMaker ❤️` });
+      embed.setFooter({ text: client.user.username });
 
       const saveButton = new ButtonBuilder();
       saveButton.setLabel(lang.msg47);

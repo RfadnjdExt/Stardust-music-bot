@@ -562,7 +562,7 @@ module.exports = {
                 )
                 .setColor(client.config.embedColor)
                 .setDescription(lang.msg118.replace("{name}", name))
-                .setFooter({ text: `MusicMaker ❤️` });
+                .setFooter({ text: client.user.username });
               return interaction
                 .editReply({ embeds: [embed], components: [button] })
                 .catch((e) => {});
@@ -595,7 +595,7 @@ module.exports = {
                 )}:R>)`
             )}`
           )
-          .setFooter({ text: `MusicMaker ❤️` });
+          .setFooter({ text: client.user.username });
         return interaction.reply({ embeds: [embed] }).catch((e) => {});
       }
 
@@ -768,7 +768,7 @@ module.exports = {
                 )
                 .setColor(client.config.embedColor)
                 .setDescription(lang.msg113)
-                .setFooter({ text: `MusicMaker ❤️` });
+                .setFooter({ text: client.user.username });
               return interaction
                 .editReply({ embeds: [embed], components: [button] })
                 .catch((e) => {});
