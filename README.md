@@ -1,4 +1,5 @@
-# Stardust Music Bot
+# [Stardust Music Bot](https://discord.com/api/oauth2/authorize?client_id=817408723571179550&permissions=8&redirect_uri=https%3A%2F%2Fpekmen.my.id%2Fstardust%2F&response_type=code&scope=bot%20applications.commands)
+
 ![](https://cdn.discordapp.com/avatars/817408723571179550/60b1c33abe9ebdd915b2b8fc1234d367.webp?size=1024)
 
 
