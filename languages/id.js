@@ -150,5 +150,17 @@ const language = {
    msg135: "Waktu pemutaran disetel ke {queue.formattedCurrentTime} berhasil",
    msg136: "Putar otomatis sekarang diaktifkan. Saya akan mengaktifkan musik acak mulai sekarang.",
    msg137: "Putar otomatis tidak aktif sekarang.",
+   msg138: "Pemilik:",
+   msg139: "Total Pengguna:",
+   msg140: "Total Server:",
+   msg141: "Total Kanal:",
+   msg142: "Total Shard:",
+   msg143: "Koneksi Voice:",
+   msg144: "Total Perintah:",
+   msg145: "Waktu Operasi:",
+   msg146: "Latensi Jaringan:",
+   msg147: "Memori Digunakan:",
+   msg148: "Undang Bot:",
+   msg149: "Dukung Paladen:"
   }
   module.exports = language;

@@ -72,20 +72,20 @@ module.exports = {
         )
         .setDescription(
           `**
-• Owner: \`pololer#9640\`
-• User Count: \`${totalMembers || 0}\`
-• Server Count: \`${totalGuilds || 0}\`
-• Channel Count: \`${totalChannels || 0}\`
-• Shard Count: \`${shardSize || 0}\`
-• Connected Voice: \`${voiceConnections}\`
-• Command Count: \`${client.commands.map((c) => c.name).length}\`
-• Operation Time: <t:${Math.floor(Number(Date.now() - client.uptime) / 1000)}:R>
-• Ping: \`${client.ws.ping} MS\`
-• Memory Usage: \`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(
+• ${lang.msg138} \`pololer#9640\`
+• ${lang.msg139} \`${totalMembers || 0}\`
+• ${lang.msg140} \`${totalGuilds || 0}\`
+• ${lang.msg141} \`${totalChannels || 0}\`
+• ${lang.msg142} \`${shardSize || 0}\`
+• ${lang.msg143} \`${voiceConnections}\`
+• ${lang.msg144} \`${client.commands.map((c) => c.name).length}\`
+• ${lang.msg145} <t:${Math.floor(Number(Date.now() - client.uptime) / 1000)}:R>
+• ${lang.msg146} \`${client.ws.ping} MS\`
+• ${lang.msg147} \`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(
             2
           )} MB\`
-• Invite Bot: [Click](${config.botInvite})
-• Support Server: [Click](${config.supportServer})
+• ${lang.msg148} [Click](${config.botInvite})
+• ${lang.msg149} [Click](${config.supportServer})
 ${
   config.sponsor.status == true
     ? `• Sponsor: [Click](${config.sponsor.url})`
