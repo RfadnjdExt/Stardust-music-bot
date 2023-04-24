@@ -98,7 +98,8 @@ ${
 }**`
         )
         .setColor(client.config.embedColor)
-        .setTimestamp();
+        .setTimestamp()
+        .setFooter({ text: client.user.username });
       return interaction.reply({ embeds: [embed] }).catch((err) => {});
     } catch (e) {
       const errorNotifer = require("../functions.js");
