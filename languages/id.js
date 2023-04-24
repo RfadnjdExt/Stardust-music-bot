@@ -152,7 +152,7 @@ const language = {
    msg137: "Putar otomatis tidak aktif sekarang.",
    msg138: "Pemilik:",
    msg139: "Total Pengguna:",
-   msg140: "Total Server:",
+   msg140: "Total Paladen:",
    msg141: "Total Kanal:",
    msg142: "Total Shard:",
    msg143: "Koneksi Voice:",
