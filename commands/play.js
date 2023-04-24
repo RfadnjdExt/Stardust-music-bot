@@ -16,6 +16,12 @@ module.exports = {
           type: ApplicationCommandOptionType.String,
           required: true,
         },
+        {
+          name: "file",
+          description: "Please attach a file",
+          type: ApplicationCommandOptionType.Attachment,
+          required: true,
+        },
       ],
     },
     {
