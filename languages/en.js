@@ -150,18 +150,18 @@ const language = {
    msg135: "Playing time was set to {queue.formattedCurrentTime} sucessfully",
    msg136: "Autoplay is now turned on. I'm going to turn on random music from now on.",
    msg137: "Autoplay is off now.",
-   msg138: "Pemilik:",
-   msg139: "Total Pengguna:",
-   msg140: "Total Server:",
-   msg141: "Total Kanal:",
-   msg142: "Total Shard:",
-   msg143: "Koneksi Voice:",
-   msg144: "Total Perintah:",
-   msg145: "Waktu Operasi:",
-   msg146: "Latensi Jaringan:",
-   msg147: "Memori Digunakan:",
-   msg148: "Undang Bot:",
-   msg149: "Dukung Paladen:"
+   msg138: "Owner:",
+   msg139: "User Count:",
+   msg140: "Server Count:",
+   msg141: "Channel Count:",
+   msg142: "Shard Count:",
+   msg143: "Connected Voice:",
+   msg144: "Command Count:",
+   msg145: "Operation Time:",
+   msg146: "Ping:",
+   msg147: "Memory Usage:",
+   msg148: "Invite Bot:",
+   msg149: "Support Server:"
    }
    module.exports = language;
    
