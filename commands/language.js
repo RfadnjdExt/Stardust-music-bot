@@ -394,6 +394,7 @@ module.exports = {
                 await button?.deferUpdate().catch((e) => {});
                 await col?.stop();
                 break;
+
               case "ja":
                 await db?.musicbot
                   ?.updateOne(
