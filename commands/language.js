@@ -87,7 +87,7 @@ module.exports = {
           .setLabel("日本語")
           .setCustomId("ja")
           .setStyle(ButtonStyle.Secondary)
-          .setEmoji("JP")
+          .setEmoji("🇯🇵")
       );
 
       let embed = new EmbedBuilder()
@@ -443,7 +443,9 @@ module.exports = {
             }
           });
         })
-        .catch((e) => {});
+        .catch((e) => {
+          console.log(e);
+        });
     } catch (e) {
       const errorNotifer = require("../functions.js");
       errorNotifer(client, interaction, e, lang);
