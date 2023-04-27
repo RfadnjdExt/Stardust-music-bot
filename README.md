@@ -30,7 +30,7 @@
 
 ## Penyiapan bot:
 
-- [Pasang node dan npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm#using-a-node-version-manager-to-install-nodejs-and-npm)
+- [Pasang node dan npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm#using-a-node-version-manager-to-install-nodejs-and-npm) (Sangat direkomendasikan menggunakan [nvm](https://github.com/coreybutler/nvm-windows))
 - Kloning repositori ini atau unduh sebagai zip dan ekstrak isinya.
 - Ubah `config.sample.js` menjadi `config.js` dan masukkan bot token, dan lain-lain sesuai kebutuhan Anda.
 - Jalankan command `npm install`.
