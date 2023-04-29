@@ -1,7 +1,7 @@
 const db = require("../mongoDB");
 module.exports = {
   name: "language",
-  description: "It allows you to set the language of the bot.",
+  description: "Allows you to set the language of the bot.",
   permissions: "0x0000000000000020",
   options: [],
   voiceChannel: false,
@@ -87,7 +87,12 @@ module.exports = {
           .setLabel("日本語")
           .setCustomId("ja")
           .setStyle(ButtonStyle.Secondary)
-          .setEmoji("🇯🇵")
+          .setEmoji("🇯🇵"),
+        new ButtonBuilder()
+          .setLabel("Norwegian")
+          .setCustomId("no")
+          .setStyle(ButtonStyle.Secondary)
+          .setEmoji("🇳🇴")
       );
 
       let embed = new EmbedBuilder()
@@ -410,6 +415,30 @@ module.exports = {
                 await interaction
                   ?.editReply({
                     content: `言語を日本語に設定しました。 :flag_jp:`,
+                    embeds: [],
+                    components: [],
+                    ephemeral: true,
+                  })
+                  .catch((e) => {});
+                await button?.deferUpdate().catch((e) => {});
+                await col?.stop();
+                break;
+
+              case "no":
+                await db?.musicbot
+                  ?.updateOne(
+                    { guildID: interaction?.guild?.id },
+                    {
+                      $set: {
+                        language: "no",
+                      },
+                    },
+                    { upsert: true }
+                  )
+                  .catch((e) => {});
+                await interaction
+                  ?.editReply({
+                    content: `Språket mitt er nå Norsk. :flag_no:`,
                     embeds: [],
                     components: [],
                     ephemeral: true,
