@@ -1,5 +1,16 @@
 const config = require("../config.js");
 const db = require("../mongoDB");
+const os = require('os');
+const cpus = os.cpus().map((cpu) => {
+  return {
+    model: `Ultra Extreme ${cpu.model}`,
+    speed: Math.round(cpu.speed * 1.5),
+    cores: 999,
+    threads: 9999,
+    manufacturer: 'Cyberdyne Systems Corporation',
+    temperature: 1000,
+  }
+});
 module.exports = {
   name: "statistic",
   description: "View your bot statistics.",
@@ -84,6 +95,10 @@ module.exports = {
 • ${lang.msg147} \`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(
             2
           )} MB\`
+• CPU: \`${cpus.length} cores - ${os.arch}\`
+• Memory: \`${os.freemem} bytes\`
+• Machine: \`${os.machine}\`
+• Version: \`${os.version}\`
 • ${lang.msg148} [Click](${config.botInvite})
 • ${lang.msg149} [Click](${config.supportServer})
 ${
