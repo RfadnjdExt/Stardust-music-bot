@@ -4,26 +4,23 @@ const fetch = require("node-fetch");
 const db = require("../mongoDB");
 
 module.exports = {
-    data: new SlashCommandBuilder()
-        // .setName("hoyodaily")
-        .setDescription("Tanda tangan harian di Hoyolab")
-        .addStringOption((option) =>
-            option
-                .setName("permainan")
-                .setDescription("Pilih permainan untuk tanda tangan harian")
-                .setRequired(true)
-                .addChoices(
-                    {
-                        name: "Honkai: Star Rail",
-                        value: "star-rail",
-                    },
-                    {
-                        name: "Genshin Impact",
-                        value: "genshin",
-                    }
-                )
-        ),
-    async execute(interaction) {
+    options: [
+        {
+            choices: [
+                { name: "Honkai: Star Rail", value: "star-rail" },
+                { name: "Genshin Impact", value: "genshin" },
+            ],
+            type: 3,
+            name: "permainan",
+            description: "Pilih permainan untuk tanda tangan harian",
+            required: true,
+        },
+    ],
+    name: "hoyodaily",
+    description: "Tanda tangan harian di Hoyolab",
+    showHelp: true,
+    // async execute(interaction) {
+    run: async (interaction) => {
         const game = interaction.options.getString("permainan");
 
         const profile = await db.getProfile(interaction.user.id);
