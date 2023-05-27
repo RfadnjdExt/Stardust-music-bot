@@ -1,25 +1,10 @@
-const { SlashCommandBuilder } = require("discord.js");
-console.log(
-    JSON.stringify(
-        new SlashCommandBuilder()
-            .setName("hoyodaily")
-            .setDescription("Tanda tangan harian di Hoyolab")
-            .addStringOption((option) =>
-                option
-                    .setName("permainan")
-                    .setDescription("Pilih permainan untuk tanda tangan harian")
-                    .setRequired(true)
-                    .addChoices(
-                        {
-                            name: "Honkai: Star Rail",
-                            value: "star-rail",
-                        },
-                        {
-                            name: "Genshin Impact",
-                            value: "genshin",
-                        }
-                    )
-            )
-            .toJSON()
-    )
-);
+const fs = require("node:fs/promises");
+const childProcess = require("node:child_process");
+
+(async () => {
+    const configSampleJS = await fs.readFile("config.sample.js", "utf-8");
+    console.log(configSampleJS.replaceAll('\n', '\\n'));
+    // const proc = childProcess.spawn("printf", [configSampleJS]);
+    // proc.stdout.pipe(process.stdout);
+    // proc.stderr.pipe(process.stderr);
+})();

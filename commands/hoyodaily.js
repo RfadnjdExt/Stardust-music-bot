@@ -20,7 +20,7 @@ module.exports = {
     description: "Tanda tangan harian di Hoyolab",
     showHelp: true,
     // async execute(interaction) {
-    run: async (interaction) => {
+    run: async (_, interaction) => {
         const game = interaction.options.getString("permainan");
 
         const profile = await db.getProfile(interaction.user.id);

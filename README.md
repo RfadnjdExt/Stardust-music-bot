@@ -48,4 +48,4 @@
 
 -   [Download Visual Studio Code](https://code.visualstudio.com/download)
 
--   [Download NodeJS V17](https://nodejs.org/)
+-   [Download NodeJS V18](https://nodejs.org/)

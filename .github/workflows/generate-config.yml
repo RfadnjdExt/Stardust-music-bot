@@ -1,0 +1,20 @@
+name: Generate Config
+on:
+    push:
+        branches: [main]
+jobs:
+    generate_config:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+            - name: Generate config file if it doesn't exist
+              run: |
+                  if [ ! -f config.sample.js ]; then
+                    printf "module.exports = {}" > config.sample.js
+                    git config --global user.email "github-actions[bot]@users.noreply.github.com"
+                    git config --global user.name "GitHub Actions"
+                    git add config.sample.js
+                    git commit -m "Add config.sample.js"
+                    git push
+                  fi
