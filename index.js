@@ -2,6 +2,7 @@ const config = require("./config.js");
 
 if (config.shardManager.shardStatus == true) {
   const { ShardingManager } = require("discord.js");
+  // const { ClusterManager } = require("discord-hybrid-sharding")
   const manager = new ShardingManager("./bot.js", {
     totalShards: "auto",
     token: config.TOKEN || process.env.TOKEN,
