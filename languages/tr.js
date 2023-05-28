@@ -58,7 +58,7 @@ const language = {
     msg44: `Döngü Modu **Kapalı** 🔁`,
     msg45: "Süre doldu",
     msg46: "Döngü Modu - Bitti",
-    msg47: 'Playliste Kaydet',
+    msg47: "Playliste Kaydet",
     msg48: "müzik durduruldu! ✅",
     msg49: `Mesaj Hızı`,
     msg50: `Mesaj Yanıt Hızı`,
@@ -103,7 +103,7 @@ const language = {
     msg89: `**Sesi değiştirmek için \`1\` ile \`{maxVol}\` arasında bir sayı yazın.** ❌`,
     msg90: "Yeni ses düzeyi:",
     msg91: `Oluşturmak istediğiniz çalma listesinin adını yazın. ❌`,
-    msg92: `Bu ada sahip bir oynatma listesi zaten var. ❌`, 
+    msg92: `Bu ada sahip bir oynatma listesi zaten var. ❌`,
     msg93: `30'dan fazla oynatma listeniz olamaz. ❌`,
     msg94: "Oynatma listesi oluşturuluyor... 🎧",
     msg95: "Oynatma listesi oluşturuldu! 🎧",
@@ -129,7 +129,7 @@ const language = {
     msg115: "Senin Oynatma Listelerin",
     msg116: `müzik`,
     msg117: `Herhangi bir oynatma listeniz yok. ❌`,
-    msg118: "Bu komutu kullanmak için süreniz doldu, komutu tekrar kullanmak için \`/playlist list {name}\` yazabilirsiniz.",
+    msg118: "Bu komutu kullanmak için süreniz doldu, komutu tekrar kullanmak için `/playlist list {name}` yazabilirsiniz.",
     msg119: "**/play playlist <liste-ismi>** komutu ile playlistleri dinleyebilirsiniz.\nBir listedeki müzikleri görmek için **/playlist list <list-name>** yazın.",
     msg120: "Lütfen bir metin kanalı belirt.",
     msg121: "<#{channel}> isimli kanal komut kullanma kanalı listesine eklendi artık sadece listedeki kanallarda bot komutu kullanılabilecek.",
@@ -150,6 +150,5 @@ const language = {
     msg135: "Çalma süresi başarıyla {queue.formattedCurrentTime} olarak ayarlandı.",
     msg136: "Otomatik oynatma şu anda açık. Artık rastgele müzikler açacağım.",
     msg137: "Otomatik oynatma şu anda kapalı.",
-    }
-    module.exports = language;
-    
+};
+module.exports = language;

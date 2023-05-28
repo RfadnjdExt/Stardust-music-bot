@@ -1,37 +1,39 @@
 {
-  "name": "stardustmusicbot",
-  "version": "15.3.0",
-  "description": "discord.js v14.9 music bot. for slash commands",
-  "main": "index.js",
-  "dependencies": {
-    "@discordjs/builders": "^1.6.1",
-    "@discordjs/opus": "^0.9.0",
-    "@discordjs/rest": "^1.7.0",
-    "@discordjs/voice": "^0.16.0",
-    "@distube/deezer": "^1.0.0",
-    "@distube/soundcloud": "^1.3.2",
-    "@distube/spotify": "^1.5.1",
-    "@distube/yt-dlp": "^1.1.3",
-    "@distube/ytdl-core": "^4.11.9",
-    "@top-gg/sdk": "^3.1.5",
-    "discord.js": "^14.9.0",
-    "distube": "^4.0.4",
-    "express": "^4.18.2",
-    "ffmpeg": "^0.0.4",
-    "ffmpeg-static": "^5.1.0",
-    "libsodium-wrappers": "^0.7.11",
-    "mongoose": "^7.0.5",
-    "sapphire": "^0.0.3",
-    "topgg-autoposter": "^2.0.1",
-    "node-gyp": "^9.3.1",
-    "discord-hybrid-sharding": "^2.1.3"
-  },
-  "scripts": {
-    "start": "node index.js"
-  },
-  "author": "Rizky Pratama",
-  "license": "ISC",
-  "engines": {
-    "node": "18.x"
-  }
+    "name": "stardustmusicbot",
+    "version": "15.3.0",
+    "description": "discord.js v14.9 music bot. for slash commands",
+    "main": "index.js",
+    "dependencies": {
+        "@discordjs/builders": "^1.6.1",
+        "@discordjs/opus": "^0.9.0",
+        "@discordjs/rest": "^1.7.0",
+        "@discordjs/voice": "^0.16.0",
+        "@distube/deezer": "^1.0.0",
+        "@distube/soundcloud": "^1.3.2",
+        "@distube/spotify": "^1.5.1",
+        "@distube/yt-dlp": "^1.1.3",
+        "@distube/ytdl-core": "^4.11.9",
+        "@top-gg/sdk": "^3.1.5",
+        "discord-hybrid-sharding": "^2.1.3",
+        "discord.js": "^14.9.0",
+        "distube": "^4.0.4",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "ffmpeg": "^0.0.4",
+        "ffmpeg-static": "^5.1.0",
+        "libsodium-wrappers": "^0.7.11",
+        "mongoose": "^7.0.5",
+        "node-gyp": "^9.3.1",
+        "sapphire": "^0.0.3",
+        "shell-quote": "^1.8.1",
+        "topgg-autoposter": "^2.0.1"
+    },
+    "scripts": {
+        "start": "node start.js"
+    },
+    "author": "Rizky Pratama",
+    "license": "ISC",
+    "engines": {
+        "node": "18.x"
+    }
 }

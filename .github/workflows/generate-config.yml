@@ -1,0 +1,20 @@
+name: Generate Config
+on:
+    push:
+        branches: [main]
+jobs:
+    generate_config:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v2
+            - name: Generate config file if it doesn't exist
+              run: |
+                  if [ ! -f config.sample.js ]; then
+                    printf "module.exports = {\n    TOKEN: \"\",\n    ownerID: [\"\"], //write your discord user id. example: [\"id\"] or [\"id1\",\"id2\"]\n    botInvite: \"\", //write your discord bot invite.\n    supportServer: \"\", //write your discord bot support server invite.\n    mongodbURL: \"\", //write your mongodb url.\n    status: \"\",\n    commandsDir: \"./commands\", //Please don't touch\n    language: \"id\", //en, tr, nl, pt, fr, ar, zh_TW, it, id, ja\n    embedColor: \"ffa954\", //hex color code\n    errorLog: \"\", //write your discord error log channel id.\n\n    sponsor: {\n        status: true, //true or false\n        url: \"\", //write your discord sponsor url.\n    },\n\n    voteManager: {\n        //optional\n        status: false, //true or false\n        api_key: \"\", //write your top.gg api key.\n        vote_commands: [\n            \"back\",\n            \"channel\",\n            \"clear\",\n            \"dj\",\n            \"filter\",\n            \"loop\",\n            \"nowplaying\",\n            \"pause\",\n            \"play\",\n            \"playlist\",\n            \"queue\",\n            \"resume\",\n            \"save\",\n            \"search\",\n            \"skip\",\n            \"stop\",\n            \"time\",\n            \"volume\",\n        ], //write your use by vote commands.\n        vote_url: \"\", //write your top.gg vote url.\n    },\n\n    shardManager: {\n        shardStatus: false, //If your bot exists on more than 1000 servers, change this part to true.\n    },\n\n    playlistSettings: {\n        maxPlaylist: 10, //max playlist count\n        maxMusic: 75, //max music count\n    },\n\n    opt: {\n        DJ: {\n            commands: [\n                \"back\",\n                \"clear\",\n                \"filter\",\n                \"loop\",\n                \"pause\",\n                \"resume\",\n                \"skip\",\n                \"stop\",\n                \"volume\",\n                \"shuffle\",\n            ], //Please don't touch\n        },\n\n        voiceConfig: {\n            leaveOnFinish: false, //If this variable is \"true\", the bot will leave the channel the music ends.\n            leaveOnStop: false, //If this variable is \"true\", the bot will leave the channel when the music is stopped.\n\n            leaveOnEmpty: {\n                //The leaveOnEnd variable must be \"false\" to use this system.\n                status: true, //If this variable is \"true\", the bot will leave the channel when the bot is offline.\n                cooldown: 10000000, //1000 = 1 second\n            },\n        },\n\n        maxVol: 150, //You can specify the maximum volume level.\n    },\n};\n" > config.sample.js
+                    git config --global user.email "github-actions[bot]@users.noreply.github.com"
+                    git config --global user.name "GitHub Actions"
+                    git add config.sample.js
+                    git commit -m "Add config.sample.js"
+                    git push
+                  fi
