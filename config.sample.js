@@ -9,6 +9,8 @@ module.exports = {
     language: "id", //en, tr, nl, pt, fr, ar, zh_TW, it, id, ja
     embedColor: "ffa954", //hex color code
     errorLog: "", //write your discord error log channel id.
+    editedChannelId: "", //for logs
+    deletedChannelId: "", //for logs
 
     sponsor: {
         status: true, //true or false

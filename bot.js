@@ -1,9 +1,10 @@
-const { Client, GatewayIntentBits, Partials } = require("discord.js");
+const { Client, GatewayIntentBits, Partials, EmbedBuilder } = require("discord.js");
 const { DisTube } = require("distube");
 const { SpotifyPlugin } = require("@distube/spotify");
 const { SoundCloudPlugin } = require("@distube/soundcloud");
 const { DeezerPlugin } = require("@distube/deezer");
 const { YtDlpPlugin } = require("@distube/yt-dlp");
+const { editedChannelId, deletedChannelId } = require("./config.js")
 const config = require("./config.js");
 const fs = require("fs");
 const client = new Client({
@@ -14,6 +15,8 @@ const client = new Client({
     ],
     intents: [
         GatewayIntentBits.Guilds, // for guild related things
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
         GatewayIntentBits.GuildMembers, // for guild members related things
         GatewayIntentBits.GuildIntegrations, // for discord Integrations
         GatewayIntentBits.GuildVoiceStates, // for voice related things
@@ -80,6 +83,63 @@ fs.readdir(config.commandsDir, (err, files) => {
         }
     });
 });
+
+// * LOG MESSAGE DELETION
+client.on('messageDelete', async (message) => {
+    const msgDeleteEmbed = new EmbedBuilder()
+        .setColor(0xff0000)
+        .setTitle('Message Delete')
+        .setAuthor({ name: client.user.username })
+        .addFields(
+            { name: 'Content', value: `> ${message.content}` },
+        )
+        .addFields(
+            { name: 'Channel', value: `<#${message.channel.id}>`}
+        )
+        .addFields(
+            { name: 'Username', value: message.author.username, inline: true },
+            { name: 'User ID', value: message.author.id, inline: true },
+            { name: 'Message ID', value: message.id, inline: true }
+        )
+        .setTimestamp()
+        .setFooter({ text: message.author.username });
+
+    const channel = await client.channels.fetch(deletedChannelId)
+    channel.send({
+        content: `DELETE: \`${message.author.username}\` (${message.author.id})`,
+        embeds: [msgDeleteEmbed]
+    })
+})
+
+// * LOG MESSAGE EDIT
+client.on('messageUpdate', async (oldMsg, newMsg) => {
+    const msgEditEmbed = new EmbedBuilder()
+        .setColor(0x0000ff)
+        .setTitle('Message Edit')
+        .setAuthor({ name: client.user.username })
+        .addFields(
+            { name: 'Old Content', value: `> ${oldMsg.content}` },
+        )
+        .addFields(
+            { name: 'New Content', value: `> ${newMsg.content}`}
+        )
+        .addFields(
+            { name: 'Channel', value: `<#${oldMsg.channel.id}>`}
+        )
+        .addFields(
+            { name: 'Username', value: oldMsg.author.username, inline: true },
+            { name: 'User ID', value: oldMsg.author.id, inline: true },
+            { name: 'Message ID', value: oldMsg.id, inline: true },
+        )
+        .setTimestamp()
+        .setFooter({ text: oldMsg.author.username });
+
+    const channel = await client.channels.fetch(editedChannelId)
+    channel.send({
+        content: `EDIT: \`${oldMsg.author.username}\` (${oldMsg.author.id})`,
+        embeds: [msgEditEmbed]
+    })
+})
 
 if (config.TOKEN || process.env.TOKEN) {
     client.login(config.TOKEN || process.env.TOKEN).catch((e) => {
