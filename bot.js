@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, Partials, EmbedBuilder } = require("discord.js");
+const { Client, GatewayIntentBits, Partials, EmbedBuilder, embedLength } = require("discord.js");
 const { DisTube } = require("distube");
 const { SpotifyPlugin } = require("@distube/spotify");
 const { SoundCloudPlugin } = require("@distube/soundcloud");
@@ -89,7 +89,10 @@ client.on('messageDelete', async (message) => {
     const msgDeleteEmbed = new EmbedBuilder()
         .setColor(0xff0000)
         .setTitle('Message Delete')
-        .setAuthor({ name: client.user.username })
+        .setAuthor({
+            name: `${message.author.username}`,
+            iconURL: message.author.displayAvatarURL()
+        })
         .addFields(
             { name: 'Content', value: `> ${message.content}` },
         )
@@ -97,26 +100,38 @@ client.on('messageDelete', async (message) => {
             { name: 'Channel', value: `<#${message.channel.id}>`}
         )
         .addFields(
-            { name: 'Username', value: message.author.username, inline: true },
+            { name: 'Username', value: `<@${message.author.id}>`, inline: true },
             { name: 'User ID', value: message.author.id, inline: true },
             { name: 'Message ID', value: message.id, inline: true }
-        )
-        .setTimestamp()
-        .setFooter({ text: message.author.username });
+            // message.author.username
+        );
 
-    const channel = await client.channels.fetch(deletedChannelId)
+    if (message.content.length > 0) {
+        msgDeleteEmbed.setDescription(`Message Content:\n${message.content}`)
+    }
+
+    message.attachments.forEach(attachment => {
+        msgDeleteEmbed.addFields({ name: "Attachment", value: attachment.url });
+    });
+
+    msgDeleteEmbed.setTimestamp().setFooter({ text: client.user.username });
+
+    const channel = await client.channels.fetch(deletedChannelId);
     channel.send({
         content: `DELETE: \`${message.author.username}\` (${message.author.id})`,
         embeds: [msgDeleteEmbed]
-    })
-})
+    });
+});
 
 // * LOG MESSAGE EDIT
 client.on('messageUpdate', async (oldMsg, newMsg) => {
     const msgEditEmbed = new EmbedBuilder()
         .setColor(0x0000ff)
         .setTitle('Message Edit')
-        .setAuthor({ name: client.user.username })
+        .setAuthor({ 
+            name: `${oldMsg.author.username}`,
+            iconURL: oldMsg.author.displayAvatarURL()
+        })
         .addFields(
             { name: 'Old Content', value: `> ${oldMsg.content}` },
         )
@@ -127,18 +142,27 @@ client.on('messageUpdate', async (oldMsg, newMsg) => {
             { name: 'Channel', value: `<#${oldMsg.channel.id}>`}
         )
         .addFields(
-            { name: 'Username', value: oldMsg.author.username, inline: true },
+            { name: 'Username', value: `<@${oldMsg.author.id}>`, inline: true },
             { name: 'User ID', value: oldMsg.author.id, inline: true },
             { name: 'Message ID', value: oldMsg.id, inline: true },
-        )
-        .setTimestamp()
-        .setFooter({ text: oldMsg.author.username });
+            // oldMsg.author.username
+        );
 
-    const channel = await client.channels.fetch(editedChannelId)
+    if (oldMsg.content.length > 0) {
+        msgEditEmbed.setDescription(`Message Content:\n${oldMsg.content}`);
+    }
+
+    oldMsg.attachments.forEach(attachment => {
+        msgEditEmbed.addFields({ name: "Attachment", value: attachment.url });
+    });
+
+    msgEditEmbed.setTimestamp().setFooter({ text: client.user.username });
+
+    const channel = await client.channels.fetch(editedChannelId);
     channel.send({
         content: `EDIT: \`${oldMsg.author.username}\` (${oldMsg.author.id})`,
         embeds: [msgEditEmbed]
-    })
+    });
 })
 
 if (config.TOKEN || process.env.TOKEN) {
@@ -171,6 +195,7 @@ if (config.mongodbURL || process.env.MONGO) {
 const express = require("express");
 const app = express();
 const http = require("http");
+const { attachment } = require("express/lib/response.js");
 app.get("/", (request, response) => {
     response?.sendStatus(200);
 });
