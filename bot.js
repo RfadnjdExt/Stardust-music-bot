@@ -106,10 +106,6 @@ client.on('messageDelete', async (message) => {
             // message.author.username
         );
 
-    if (message.content.length > 0) {
-        msgDeleteEmbed.setDescription(`Message Content:\n${message.content}`)
-    }
-
     message.attachments.forEach(attachment => {
         msgDeleteEmbed.addFields({ name: "Attachment", value: attachment.url });
     });
@@ -147,10 +143,6 @@ client.on('messageUpdate', async (oldMsg, newMsg) => {
             { name: 'Message ID', value: oldMsg.id, inline: true },
             // oldMsg.author.username
         );
-
-    if (oldMsg.content.length > 0) {
-        msgEditEmbed.setDescription(`Message Content:\n${oldMsg.content}`);
-    }
 
     oldMsg.attachments.forEach(attachment => {
         msgEditEmbed.addFields({ name: "Attachment", value: attachment.url });
