@@ -1,4 +1,5 @@
 function errorNotifer(client, interaction, e, lang) {
+    console.log(client, interaction, e, lang)
     const { EmbedBuilder } = require("discord.js");
     if (client.errorLog) {
         if (client.shard) {
@@ -90,7 +91,7 @@ function errorNotifer(client, interaction, e, lang) {
     `);
     }
     return interaction
-        .reply({ content: `${lang.error7}\n\`${e}\``, ephemeral: true })
+        .reply({ content: `${lang.error}\n\`${e}\``, ephemeral: true })
         .catch((e) => {});
 }
 

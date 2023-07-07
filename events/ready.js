@@ -13,7 +13,6 @@ module.exports = async (client) => {
         (async () => {
             try {
                 const body = await client.commands;
-                console.log(body);
                 await rest.put(Routes.applicationCommands(client.user.id), {
                     body,
                 });
