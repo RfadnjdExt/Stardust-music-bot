@@ -10,7 +10,7 @@ if (config.shardManager.shardStatus == true) {
         respawn: true,
     });
     manager.on("shardCreate", (shard) =>
-        console.log(`Launched shard ${shard.id}`)
+        console.log(`Launched shard ${shard.id}`),
     );
     manager
         .spawn({ amount: "auto", delay: 5500, timeout: 30000 })

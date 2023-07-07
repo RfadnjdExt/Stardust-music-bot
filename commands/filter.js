@@ -44,7 +44,7 @@ module.exports = {
                 new ButtonBuilder()
                     .setLabel("Nightcore")
                     .setCustomId("nightcore")
-                    .setStyle(ButtonStyle.Secondary)
+                    .setStyle(ButtonStyle.Secondary),
             );
 
             let buttons2 = new ActionRowBuilder().addComponents(
@@ -67,7 +67,7 @@ module.exports = {
                 new ButtonBuilder()
                     .setLabel("Reverse")
                     .setCustomId("reverse")
-                    .setStyle(ButtonStyle.Secondary)
+                    .setStyle(ButtonStyle.Secondary),
             );
 
             let buttons3 = new ActionRowBuilder().addComponents(
@@ -90,7 +90,7 @@ module.exports = {
                 new ButtonBuilder()
                     .setLabel("Earwax")
                     .setCustomId("earwax")
-                    .setStyle(ButtonStyle.Secondary)
+                    .setStyle(ButtonStyle.Secondary),
             );
 
             let embed = new EmbedBuilder()
@@ -148,7 +148,7 @@ module.exports = {
                                 embed?.setDescription(
                                     lang.msg31
                                         .replace("{filter}", filtre)
-                                        .replace("{status}", "❌")
+                                        .replace("{status}", "❌"),
                                 );
                                 return interaction
                                     ?.editReply({ embeds: [embed] })
@@ -158,7 +158,7 @@ module.exports = {
                                 embed?.setDescription(
                                     lang.msg31
                                         .replace("{filter}", filtre)
-                                        .replace("{status}", "✅")
+                                        .replace("{status}", "✅"),
                                 );
                                 return interaction
                                     ?.editReply({ embeds: [embed] })
@@ -167,13 +167,15 @@ module.exports = {
                         } else {
                             const filter = filters?.find(
                                 (x) =>
-                                    x?.toLowerCase() === filtre?.toLowerCase()
+                                    x?.toLowerCase() === filtre?.toLowerCase(),
                             );
                             embed?.setDescription(
                                 lang.msg30.replace(
                                     "{filters}",
-                                    filters?.map((mr) => `\`${mr}\``).join(", ")
-                                )
+                                    filters
+                                        ?.map((mr) => `\`${mr}\``)
+                                        .join(", "),
+                                ),
                             );
                             if (!filter)
                                 return interaction

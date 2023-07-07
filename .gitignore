@@ -5,3 +5,5 @@ config.js
 .env
 
 package-lock.json
+.diff.swp
+diff

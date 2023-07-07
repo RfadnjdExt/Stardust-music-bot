@@ -36,7 +36,7 @@ module.exports = {
 
         if (!url) {
             return await interaction.reply(
-                `Maaf, saya tidak mengenali permainan ${game}.`
+                `Maaf, saya tidak mengenali permainan ${game}.`,
             );
         }
 
@@ -55,19 +55,19 @@ module.exports = {
         }
 
         const rewards = html.match(
-            /(?<=<span class="info-title ellipses">).+?(?=<\/span>)/g
+            /(?<=<span class="info-title ellipses">).+?(?=<\/span>)/g,
         );
         const messageEmbed = new MessageEmbed();
         messageEmbed
             .setColor("#00ff00")
             .setTitle(`Berhasil tanda tangan harian ${game}!`)
             .setDescription(
-                `Kamu berhasil tanda tangan harian ${game}. Berikut adalah hadiah yang kamu terima:`
+                `Kamu berhasil tanda tangan harian ${game}. Berikut adalah hadiah yang kamu terima:`,
             )
             .addFields(
                 rewards.map((reward) => {
                     return { name: "\u200b", value: reward };
-                })
+                }),
             );
         await interaction.reply({ embeds: [messageEmbed] });
     },

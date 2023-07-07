@@ -23,7 +23,7 @@ module.exports = {
                     .reply({
                         content: `${lang.msg18.replace(
                             "{queue.previousTracks[1].title}",
-                            song.name
+                            song.name,
                         )}`,
                     })
                     .catch((e) => {});

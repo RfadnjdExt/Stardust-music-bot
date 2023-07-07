@@ -10,13 +10,13 @@ module.exports = async (client, oldState, newState) => {
             lang = require(`../languages/${lang}.js`);
             setTimeout(async () => {
                 let botChannel = oldState?.guild?.channels?.cache?.get(
-                    queue?.voice?.connection?.joinConfig?.channelId
+                    queue?.voice?.connection?.joinConfig?.channelId,
                 );
                 if (botChannel) {
                     if (botChannel.id == oldState.channelId)
                         if (
                             botChannel?.members?.find(
-                                (x) => x == client?.user?.id
+                                (x) => x == client?.user?.id,
                             )
                         ) {
                             if (botChannel?.members?.size == 1) {

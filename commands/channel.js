@@ -57,7 +57,7 @@ module.exports = {
                 });
 
                 const channel_filter = data?.channels?.filter(
-                    (x) => x.channel === channel.id
+                    (x) => x.channel === channel.id,
                 );
                 if (channel_filter?.length > 0)
                     return interaction
@@ -74,7 +74,7 @@ module.exports = {
                                 },
                             },
                         },
-                        { upsert: true }
+                        { upsert: true },
                     )
                     .catch((e) => {});
 
@@ -99,7 +99,7 @@ module.exports = {
                         .catch((e) => {});
 
                 const channel_filter = data?.channels?.filter(
-                    (x) => x.channel === channel.id
+                    (x) => x.channel === channel.id,
                 );
                 if (!channel_filter?.length > 0)
                     return interaction
@@ -116,7 +116,7 @@ module.exports = {
                                 },
                             },
                         },
-                        { upsert: true }
+                        { upsert: true },
                     )
                     .catch((e) => {});
 

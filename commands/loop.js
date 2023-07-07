@@ -36,7 +36,7 @@ module.exports = {
                 new ButtonBuilder()
                     .setLabel(lang.msg37)
                     .setStyle(ButtonStyle.Danger)
-                    .setCustomId("close")
+                    .setCustomId("close"),
             );
 
             const embed = new EmbedBuilder()
@@ -61,7 +61,7 @@ module.exports = {
                     col.on("collect", async (button) => {
                         if (button.user.id !== interaction.user.id) return;
                         const queue1 = client.player.getQueue(
-                            interaction.guild.id
+                            interaction.guild.id,
                         );
                         if (!queue1 || !queue1.playing) {
                             await interaction
@@ -113,7 +113,7 @@ module.exports = {
                                 .setStyle(ButtonStyle.Secondary)
                                 .setLabel(lang.msg45)
                                 .setCustomId("timeend")
-                                .setDisabled(true)
+                                .setDisabled(true),
                         );
 
                         const embed = new EmbedBuilder()

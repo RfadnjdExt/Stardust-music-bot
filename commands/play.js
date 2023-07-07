@@ -56,11 +56,11 @@ module.exports = {
                 for (let i = 0; i < playlist.length; i++) {
                     if (
                         playlist[i]?.playlist?.filter(
-                            (p) => p.name === playlistw
+                            (p) => p.name === playlistw,
                         )?.length > 0
                     ) {
                         let playlist_owner_filter = playlist[i].playlist.filter(
-                            (p) => p.name === playlistw
+                            (p) => p.name === playlistw,
                         )[0].author;
                         let playlist_public_filter = playlist[
                             i
@@ -79,7 +79,7 @@ module.exports = {
                         }
 
                         const music_filter = playlist[i]?.musics?.filter(
-                            (m) => m.playlist_name === playlistw
+                            (m) => m.playlist_name === playlistw,
                         );
                         if (!music_filter?.length > 0)
                             return interaction
@@ -104,7 +104,7 @@ module.exports = {
                                             source: "custom",
                                         },
                                         parallel: true,
-                                    }
+                                    },
                                 );
 
                             await interaction
@@ -112,11 +112,11 @@ module.exports = {
                                     content: lang.msg57
                                         .replace(
                                             "{interaction.member.id}",
-                                            interaction.member.id
+                                            interaction.member.id,
                                         )
                                         .replace(
                                             "{music_filter.length}",
-                                            music_filter.length
+                                            music_filter.length,
                                         ),
                                 })
                                 .catch((e) => {});
@@ -129,7 +129,7 @@ module.exports = {
                                         member: interaction.member,
                                         textChannel: interaction.channel,
                                         interaction,
-                                    }
+                                    },
                                 );
                             } catch (e) {
                                 await interaction
@@ -153,7 +153,7 @@ module.exports = {
                                                     },
                                                 },
                                             },
-                                            { upsert: true }
+                                            { upsert: true },
                                         )
                                         .catch((e) => {});
 
@@ -174,7 +174,7 @@ module.exports = {
                                                     },
                                                 },
                                             },
-                                            { upsert: true }
+                                            { upsert: true },
                                         )
                                         .catch((e) => {});
                                 });
@@ -208,7 +208,7 @@ module.exports = {
                             member: interaction.member,
                             textChannel: interaction.channel,
                             interaction,
-                        }
+                        },
                     );
                 } catch (e) {
                     await interaction

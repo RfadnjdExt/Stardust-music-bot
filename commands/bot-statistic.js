@@ -35,47 +35,47 @@ module.exports = {
                     client.shard.broadcastEval((c) =>
                         c.guilds.cache.reduce(
                             (acc, guild) => acc + guild.memberCount,
-                            0
-                        )
+                            0,
+                        ),
                     ),
                     client.shard.broadcastEval((c) =>
                         c.guilds.cache.reduce(
                             (acc, guild) => acc + guild.channels.cache.size,
-                            0
-                        )
+                            0,
+                        ),
                     ),
                     client.shard.broadcastEval(
-                        (c) => c.voice?.adapters?.size || 0
+                        (c) => c.voice?.adapters?.size || 0,
                     ),
                 ];
                 await Promise.all(promises).then((results) => {
                     totalGuilds = results[0].reduce(
                         (acc, guildCount) => acc + guildCount,
-                        0
+                        0,
                     );
                     totalMembers = results[1].reduce(
                         (acc, memberCount) => acc + memberCount,
-                        0
+                        0,
                     );
                     totalChannels = results[2].reduce(
                         (acc, channelCount) => acc + channelCount,
-                        0
+                        0,
                     );
                     shardSize = client.shard.count;
                     voiceConnections = results[3].reduce(
                         (acc, voiceCount) => acc + voiceCount,
-                        0
+                        0,
                     );
                 });
             } else {
                 totalGuilds = client.guilds.cache.size;
                 totalMembers = client.guilds.cache.reduce(
                     (acc, guild) => acc + guild.memberCount,
-                    0
+                    0,
                 );
                 totalChannels = client.guilds.cache.reduce(
                     (acc, guild) => acc + guild.channels.cache.size,
-                    0
+                    0,
                 );
                 shardSize = 1;
                 voiceConnections = client?.voice?.adapters?.size || 0;
@@ -84,7 +84,7 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setTitle(client.user.username + lang.msg19)
                 .setThumbnail(
-                    client.user.displayAvatarURL({ dynamic: true, size: 1024 })
+                    client.user.displayAvatarURL({ dynamic: true, size: 1024 }),
                 )
                 .setDescription(
                     `**
@@ -98,7 +98,7 @@ module.exports = {
 • ${lang.msg145} <t:${Math.floor(Number(Date.now() - client.uptime) / 1000)}:R>
 • ${lang.msg146} \`${client.ws.ping} MS\`
 • ${lang.msg147} \`${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(
-                        2
+                        2,
                     )} MB\`
 • CPU: \`${cpus.length} cores - ${os.arch}\`
 • Memory: \`${os.freemem} bytes\`
@@ -115,7 +115,7 @@ ${
     config.voteManager.status == true
         ? `• Vote: [Click](${config.voteManager.vote_url})`
         : ``
-}**`
+}**`,
                 )
                 .setColor(client.config.embedColor)
                 .setTimestamp()

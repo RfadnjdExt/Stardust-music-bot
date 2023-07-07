@@ -14,7 +14,7 @@ module.exports = async (client, queue, song) => {
                         .replace("{track?.title}", song?.name)
                         .replace(
                             "{queue?.connection.channel.name}",
-                            `<#${queue.voice.connection.joinConfig.channelId}>`
+                            `<#${queue.voice.connection.joinConfig.channelId}>`,
                         ),
                 })
                 .catch((e) => {});

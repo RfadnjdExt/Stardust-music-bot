@@ -37,8 +37,8 @@ module.exports = async (client, interaction) => {
                                             await data?.channels?.filter(
                                                 (x) =>
                                                     !interaction?.guild?.channels?.cache?.get(
-                                                        x?.channel
-                                                    )
+                                                        x?.channel,
+                                                    ),
                                             );
 
                                         if (channel_control?.length > 0) {
@@ -58,7 +58,7 @@ module.exports = async (client, interaction) => {
                                                                 },
                                                             },
                                                         },
-                                                        { upsert: true }
+                                                        { upsert: true },
                                                     )
                                                     .catch((e) => {});
                                             }
@@ -70,18 +70,20 @@ module.exports = async (client, interaction) => {
                                                 data?.channels?.filter(
                                                     (x) =>
                                                         x.channel ===
-                                                        interaction?.channel?.id
+                                                        interaction?.channel
+                                                            ?.id,
                                                 );
 
                                             if (
                                                 !channel_filter?.length > 0 &&
                                                 !interaction?.member?.permissions?.has(
-                                                    "0x0000000000000020"
+                                                    "0x0000000000000020",
                                                 )
                                             ) {
                                                 channel_filter = data?.channels
                                                     ?.map(
-                                                        (x) => `<#${x.channel}>`
+                                                        (x) =>
+                                                            `<#${x.channel}>`,
                                                     )
                                                     .join(", ");
                                                 return interaction
@@ -89,7 +91,7 @@ module.exports = async (client, interaction) => {
                                                         content:
                                                             lang.msg126.replace(
                                                                 "{channel_filter}",
-                                                                channel_filter
+                                                                channel_filter,
                                                             ),
                                                         ephemeral: true,
                                                     })
@@ -100,14 +102,14 @@ module.exports = async (client, interaction) => {
                                     if (
                                         interaction?.member?.permissions?.has(
                                             props?.permissions ||
-                                                "0x0000000000000800"
+                                                "0x0000000000000800",
                                         )
                                     ) {
                                         const DJ = client.config.opt.DJ;
                                         if (
                                             props &&
                                             DJ.commands.includes(
-                                                interaction?.commandName
+                                                interaction?.commandName,
                                             )
                                         ) {
                                             let djRole = await db?.musicbot
@@ -119,17 +121,17 @@ module.exports = async (client, interaction) => {
                                             if (djRole) {
                                                 const roleDJ =
                                                     interaction?.guild?.roles?.cache?.get(
-                                                        djRole?.role
+                                                        djRole?.role,
                                                     );
                                                 if (
                                                     !interaction?.member?.permissions?.has(
-                                                        "0x0000000000000020"
+                                                        "0x0000000000000020",
                                                     )
                                                 ) {
                                                     if (roleDJ) {
                                                         if (
                                                             !interaction?.member?.roles?.cache?.has(
-                                                                roleDJ?.id
+                                                                roleDJ?.id,
                                                             )
                                                         ) {
                                                             const embed =
@@ -137,37 +139,37 @@ module.exports = async (client, interaction) => {
                                                                     .setColor(
                                                                         client
                                                                             .config
-                                                                            .embedColor
+                                                                            .embedColor,
                                                                     )
                                                                     .setTitle(
                                                                         client
                                                                             ?.user
-                                                                            ?.username
+                                                                            ?.username,
                                                                     )
                                                                     .setThumbnail(
-                                                                        client?.user?.displayAvatarURL()
+                                                                        client?.user?.displayAvatarURL(),
                                                                     )
                                                                     .setDescription(
                                                                         lang.embed1
                                                                             .replace(
                                                                                 "{djRole}",
-                                                                                roleDJ?.id
+                                                                                roleDJ?.id,
                                                                             )
                                                                             .replace(
                                                                                 "{cmdMAP}",
                                                                                 client.config.opt.DJ.commands
                                                                                     .map(
                                                                                         (
-                                                                                            astra
+                                                                                            astra,
                                                                                         ) =>
                                                                                             "`" +
                                                                                             astra +
-                                                                                            "`"
+                                                                                            "`",
                                                                                     )
                                                                                     .join(
-                                                                                        ", "
-                                                                                    )
-                                                                            )
+                                                                                        ", ",
+                                                                                    ),
+                                                                            ),
                                                                     )
                                                                     .setTimestamp()
                                                                     .setFooter({
@@ -183,7 +185,7 @@ module.exports = async (client, interaction) => {
                                                                     ephemeral: true,
                                                                 })
                                                                 .catch(
-                                                                    (e) => {}
+                                                                    (e) => {},
                                                                 );
                                                         }
                                                     }
@@ -203,7 +205,7 @@ module.exports = async (client, interaction) => {
                                                     .catch((e) => {});
                                             const guild_me =
                                                 interaction?.guild?.members?.cache?.get(
-                                                    client?.user?.id
+                                                    client?.user?.id,
                                                 );
                                             if (guild_me?.voice?.channelId) {
                                                 if (
@@ -221,6 +223,7 @@ module.exports = async (client, interaction) => {
                                                 }
                                             }
                                         }
+                                        console.log(props);
                                         return props.run(client, interaction);
                                     } else {
                                         return interaction?.reply({
@@ -228,11 +231,11 @@ module.exports = async (client, interaction) => {
                                                 props?.permissions
                                                     ?.replace(
                                                         "0x0000000000000020",
-                                                        "MANAGE GUILD"
+                                                        "MANAGE GUILD",
                                                     )
                                                     ?.replace(
                                                         "0x0000000000000800",
-                                                        "SEND MESSAGES"
+                                                        "SEND MESSAGES",
                                                     ) || "SEND MESSAGES"
                                             }**`,
                                             ephemeral: true,
@@ -256,14 +259,14 @@ module.exports = async (client, interaction) => {
             ) {
                 if (
                     config.voteManager.vote_commands.includes(
-                        interaction?.commandName
+                        interaction?.commandName,
                     )
                 ) {
                     try {
                         const topSdk = require("@top-gg/sdk");
                         let topApi = new topSdk.Api(
                             config.voteManager.api_key,
-                            client
+                            client,
                         );
                         await topApi
                             ?.hasVoted(interaction?.user?.id)
@@ -271,7 +274,7 @@ module.exports = async (client, interaction) => {
                                 if (!voted) {
                                     const embed2 = new EmbedBuilder()
                                         .setTitle(
-                                            "Vote " + client?.user?.username
+                                            "Vote " + client?.user?.username,
                                         )
                                         .setColor(client?.config?.embedColor)
                                         .setDescription(`${config.voteManager.vote_commands
@@ -324,7 +327,7 @@ module.exports = async (client, interaction) => {
 
                                 const PlaylistRow =
                                     new ActionRowBuilder().addComponents(
-                                        PlayList
+                                        PlayList,
                                     );
 
                                 Modal.addComponents(PlaylistRow);
@@ -357,7 +360,7 @@ module.exports = async (client, interaction) => {
                                 .setThumbnail(queue?.songs[0]?.thumbnail)
                                 .setTimestamp()
                                 .setDescription(
-                                    `**${queue?.formattedCurrentTime} / ${queue?.formattedDuration} (${music_percent3}%)**`
+                                    `**${queue?.formattedCurrentTime} / ${queue?.formattedDuration} (${music_percent3}%)**`,
                                 )
                                 .setFooter({ text: client.user.username });
                             interaction?.message
@@ -381,7 +384,7 @@ module.exports = async (client, interaction) => {
                     case "playlistModal":
                         {
                             const queue = client?.player?.getQueue(
-                                interaction?.guildId
+                                interaction?.guildId,
                             );
                             if (!queue || !queue?.playing)
                                 return interaction
@@ -395,7 +398,7 @@ module.exports = async (client, interaction) => {
 
                             const name =
                                 interaction?.fields?.getTextInputValue(
-                                    "playlist"
+                                    "playlist",
                                 );
 
                             const playlist = await db?.playlist
@@ -403,7 +406,7 @@ module.exports = async (client, interaction) => {
                                 .catch((e) => {});
                             if (
                                 !playlist?.playlist?.filter(
-                                    (p) => p.name === name
+                                    (p) => p.name === name,
                                 ).length > 0
                             )
                                 return interaction
@@ -416,7 +419,7 @@ module.exports = async (client, interaction) => {
                             const music_filter = playlist?.musics?.filter(
                                 (m) =>
                                     m.playlist_name === name &&
-                                    m.music_name === queue?.songs[0]?.name
+                                    m.music_name === queue?.songs[0]?.name,
                             );
                             if (!music_filter?.length > 0) {
                                 await db?.playlist
@@ -434,7 +437,7 @@ module.exports = async (client, interaction) => {
                                                 },
                                             },
                                         },
-                                        { upsert: true }
+                                        { upsert: true },
                                     )
                                     .catch((e) => {});
                                 return interaction

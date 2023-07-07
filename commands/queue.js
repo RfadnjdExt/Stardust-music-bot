@@ -72,7 +72,10 @@ module.exports = {
                 return new EmbedBuilder()
                     .setTitle(`${lang.msg64} - ${interaction.guild.name}`)
                     .setThumbnail(
-                        interaction.guild.iconURL({ size: 2048, dynamic: true })
+                        interaction.guild.iconURL({
+                            size: 2048,
+                            dynamic: true,
+                        }),
                     )
                     .setColor(client.config.embedColor)
                     .setDescription(
@@ -81,8 +84,8 @@ module.exports = {
         (data) =>
             `\n\`${sayı++}\` | [${data.title}](${data.url}) | **${
                 data.author
-            }** (${lang.msg66} <@${data.user.id}>)`
-    )}`
+            }** (${lang.msg66} <@${data.user.id}>)`,
+    )}`,
                     )
                     .setFooter({
                         text: `${lang.msg67} ${page}/${Math.floor(a + 1)}`,
@@ -171,7 +174,7 @@ module.exports = {
                                 .setStyle(ButtonStyle.Secondary)
                                 .setEmoji("➡️")
                                 .setCustomId(forwardId)
-                                .setDisabled(true)
+                                .setDisabled(true),
                         );
 
                         const embed = new EmbedBuilder()
@@ -180,7 +183,7 @@ module.exports = {
                                 interaction?.guild?.iconURL({
                                     size: 2048,
                                     dynamic: true,
-                                })
+                                }),
                             )
                             .setColor(client.config.embedColor)
                             .setDescription(lang.msg70)

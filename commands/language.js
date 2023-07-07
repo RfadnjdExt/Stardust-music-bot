@@ -43,7 +43,7 @@ module.exports = {
                     .setLabel("Français")
                     .setCustomId("fr")
                     .setStyle(ButtonStyle.Secondary)
-                    .setEmoji("🇫🇷")
+                    .setEmoji("🇫🇷"),
             );
 
             let buttons2 = new ActionRowBuilder().addComponents(
@@ -71,7 +71,7 @@ module.exports = {
                     .setLabel("Español")
                     .setCustomId("es")
                     .setStyle(ButtonStyle.Secondary)
-                    .setEmoji("🇪🇸")
+                    .setEmoji("🇪🇸"),
             );
 
             let buttons3 = new ActionRowBuilder().addComponents(
@@ -94,7 +94,7 @@ module.exports = {
                     .setLabel("Norwegian")
                     .setCustomId("no")
                     .setStyle(ButtonStyle.Secondary)
-                    .setEmoji("🇳🇴")
+                    .setEmoji("🇳🇴"),
             );
 
             let embed = new EmbedBuilder()
@@ -126,7 +126,7 @@ module.exports = {
                                                 language: "tr",
                                             },
                                         },
-                                        { upsert: true }
+                                        { upsert: true },
                                     )
                                     .catch((e) => {});
                                 await interaction
@@ -150,7 +150,7 @@ module.exports = {
                                                 language: "en",
                                             },
                                         },
-                                        { upsert: true }
+                                        { upsert: true },
                                     )
                                     .catch((e) => {});
                                 await interaction
@@ -174,7 +174,7 @@ module.exports = {
                                                 language: "nl",
                                             },
                                         },
-                                        { upsert: true }
+                                        { upsert: true },
                                     )
                                     .catch((e) => {});
                                 await interaction
@@ -198,7 +198,7 @@ module.exports = {
                                                 language: "fr",
                                             },
                                         },
-                                        { upsert: true }
+                                        { upsert: true },
                                     )
                                     .catch((e) => {});
                                 await interaction
@@ -222,7 +222,7 @@ module.exports = {
                                                 language: "pt",
                                             },
                                         },
-                                        { upsert: true }
+                                        { upsert: true },
                                     )
                                     .catch((e) => {});
                                 await interaction
@@ -246,7 +246,7 @@ module.exports = {
                                                 language: "ar",
                                             },
                                         },
-                                        { upsert: true }
+                                        { upsert: true },
                                     )
                                     .catch((e) => {});
                                 await interaction
@@ -270,7 +270,7 @@ module.exports = {
                                                 language: "zh_TW",
                                             },
                                         },
-                                        { upsert: true }
+                                        { upsert: true },
                                     )
                                     .catch((e) => {});
                                 await interaction
@@ -294,7 +294,7 @@ module.exports = {
                                                 language: "it",
                                             },
                                         },
-                                        { upsert: true }
+                                        { upsert: true },
                                     )
                                     .catch((e) => {});
                                 await interaction
@@ -318,7 +318,7 @@ module.exports = {
                                                 language: "id",
                                             },
                                         },
-                                        { upsert: true }
+                                        { upsert: true },
                                     )
                                     .catch((e) => {});
                                 await interaction
@@ -342,7 +342,7 @@ module.exports = {
                                                 language: "es",
                                             },
                                         },
-                                        { upsert: true }
+                                        { upsert: true },
                                     )
                                     .catch((e) => {});
                                 await interaction
@@ -366,7 +366,7 @@ module.exports = {
                                                 language: "ru",
                                             },
                                         },
-                                        { upsert: true }
+                                        { upsert: true },
                                     )
                                     .catch((e) => {});
                                 await interaction
@@ -390,7 +390,7 @@ module.exports = {
                                                 language: "de",
                                             },
                                         },
-                                        { upsert: true }
+                                        { upsert: true },
                                     )
                                     .catch((e) => {});
                                 await interaction
@@ -414,7 +414,7 @@ module.exports = {
                                                 language: "ja",
                                             },
                                         },
-                                        { upsert: true }
+                                        { upsert: true },
                                     )
                                     .catch((e) => {});
                                 await interaction
@@ -438,7 +438,7 @@ module.exports = {
                                                 language: "no",
                                             },
                                         },
-                                        { upsert: true }
+                                        { upsert: true },
                                     )
                                     .catch((e) => {});
                                 await interaction
@@ -462,7 +462,7 @@ module.exports = {
                                     .setStyle(ButtonStyle.Secondary)
                                     .setLabel(lang.msg45)
                                     .setCustomId("timeend")
-                                    .setDisabled(true)
+                                    .setDisabled(true),
                             );
 
                             embed = new EmbedBuilder()

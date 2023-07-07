@@ -67,25 +67,25 @@ module.exports = {
             let buttons2;
             if (track_button_creator.length > 10) {
                 buttons1 = new ActionRowBuilder().addComponents(
-                    track_button_creator.slice(0, 5)
+                    track_button_creator.slice(0, 5),
                 );
                 buttons2 = new ActionRowBuilder().addComponents(
-                    track_button_creator.slice(5, 10)
+                    track_button_creator.slice(5, 10),
                 );
             } else {
                 if (track_button_creator.length > 5) {
                     buttons1 = new ActionRowBuilder().addComponents(
-                        track_button_creator.slice(0, 5)
+                        track_button_creator.slice(0, 5),
                     );
                     buttons2 = new ActionRowBuilder().addComponents(
                         track_button_creator.slice(
                             5,
-                            Number(track_button_creator.length)
-                        )
+                            Number(track_button_creator.length),
+                        ),
                     );
                 } else {
                     buttons1 = new ActionRowBuilder().addComponents(
-                        track_button_creator
+                        track_button_creator,
                     );
                 }
             }
@@ -94,7 +94,7 @@ module.exports = {
                 new ButtonBuilder()
                     .setLabel(lang.msg81)
                     .setStyle(ButtonStyle.Danger)
-                    .setCustomId("cancel")
+                    .setCustomId("cancel"),
             );
 
             embed.setDescription(
@@ -103,12 +103,12 @@ module.exports = {
                         (song, i) =>
                             `**${i + 1}**. [${song.name}](${song.url}) | \`${
                                 song.uploader.name
-                            }\``
+                            }\``,
                     )
                     .join("\n")}\n\n${lang.msg76.replace(
                     "{maxTracks.length}",
-                    maxTracks.length
-                )}`
+                    maxTracks.length,
+                )}`,
             );
             embed.setTimestamp();
             embed.setFooter({ text: client.user.username });
@@ -149,12 +149,12 @@ module.exports = {
                             default: {
                                 embed.setThumbnail(
                                     maxTracks[Number(button.customId) - 1]
-                                        .thumbnail
+                                        .thumbnail,
                                 );
                                 embed.setDescription(
                                     `**${
                                         res[Number(button.customId) - 1].name
-                                    }** ${lang.msg79}`
+                                    }** ${lang.msg79}`,
                                 );
                                 await interaction
                                     .editReply({
@@ -170,7 +170,7 @@ module.exports = {
                                             member: interaction.member,
                                             textChannel: interaction.channel,
                                             interaction,
-                                        }
+                                        },
                                     );
                                 } catch (e) {
                                     await interaction

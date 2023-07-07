@@ -39,7 +39,7 @@ function errorNotifer(client, interaction, e, lang) {
                     let channel = c.channels.cache.get(channelId);
                     channel?.send({ embeds: [embed] }).catch((e) => {});
                 },
-                { context: { channelId: client?.errorLog, embed: embed } }
+                { context: { channelId: client?.errorLog, embed: embed } },
             );
         } else {
             let embed = new EmbedBuilder()

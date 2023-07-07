@@ -46,7 +46,7 @@ module.exports = {
                                 role: role.id,
                             },
                         },
-                        { upsert: true }
+                        { upsert: true },
                     )
                     .catch((e) => {});
                 return await interaction
@@ -70,7 +70,7 @@ module.exports = {
                                     role: "",
                                 },
                             },
-                            { upsert: true }
+                            { upsert: true },
                         )
                         .catch((e) => {});
                     return await interaction

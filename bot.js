@@ -1,10 +1,16 @@
-const { Client, GatewayIntentBits, Partials, EmbedBuilder, embedLength } = require("discord.js");
+const {
+    Client,
+    GatewayIntentBits,
+    Partials,
+    EmbedBuilder,
+    embedLength,
+} = require("discord.js");
 const { DisTube } = require("distube");
 const { SpotifyPlugin } = require("@distube/spotify");
 const { SoundCloudPlugin } = require("@distube/soundcloud");
 const { DeezerPlugin } = require("@distube/deezer");
 const { YtDlpPlugin } = require("@distube/yt-dlp");
-const { editedChannelId, deletedChannelId } = require("./config.js")
+const { editedChannelId, deletedChannelId } = require("./config.js");
 const config = require("./config.js");
 const fs = require("fs");
 const client = new Client({
@@ -85,28 +91,28 @@ fs.readdir(config.commandsDir, (err, files) => {
 });
 
 // * LOG MESSAGE DELETION
-client.on('messageDelete', async (message) => {
+client.on("messageDelete", async (message) => {
     const msgDeleteEmbed = new EmbedBuilder()
         .setColor(0xff0000)
-        .setTitle('Message Delete')
+        .setTitle("Message Delete")
         .setAuthor({
             name: `${message.author.username}`,
-            iconURL: message.author.displayAvatarURL()
+            iconURL: message.author.displayAvatarURL(),
         })
+        .addFields({ name: "Content", value: `> ${message.content}` })
+        .addFields({ name: "Channel", value: `<#${message.channel.id}>` })
         .addFields(
-            { name: 'Content', value: `> ${message.content}` },
-        )
-        .addFields(
-            { name: 'Channel', value: `<#${message.channel.id}>`}
-        )
-        .addFields(
-            { name: 'Username', value: `<@${message.author.id}>`, inline: true },
-            { name: 'User ID', value: message.author.id, inline: true },
-            { name: 'Message ID', value: message.id, inline: true }
+            {
+                name: "Username",
+                value: `<@${message.author.id}>`,
+                inline: true,
+            },
+            { name: "User ID", value: message.author.id, inline: true },
+            { name: "Message ID", value: message.id, inline: true },
             // message.author.username
         );
 
-    message.attachments.forEach(attachment => {
+    message.attachments.forEach((attachment) => {
         msgDeleteEmbed.addFields({ name: "Attachment", value: attachment.url });
     });
 
@@ -115,36 +121,30 @@ client.on('messageDelete', async (message) => {
     const channel = await client.channels.fetch(deletedChannelId);
     channel.send({
         content: `DELETE: \`${message.author.username}\` (${message.author.id})`,
-        embeds: [msgDeleteEmbed]
+        embeds: [msgDeleteEmbed],
     });
 });
 
 // * LOG MESSAGE EDIT
-client.on('messageUpdate', async (oldMsg, newMsg) => {
+client.on("messageUpdate", async (oldMsg, newMsg) => {
     const msgEditEmbed = new EmbedBuilder()
         .setColor(0x0000ff)
-        .setTitle('Message Edit')
-        .setAuthor({ 
+        .setTitle("Message Edit")
+        .setAuthor({
             name: `${oldMsg.author.username}`,
-            iconURL: oldMsg.author.displayAvatarURL()
+            iconURL: oldMsg.author.displayAvatarURL(),
         })
+        .addFields({ name: "Old Content", value: `> ${oldMsg.content}` })
+        .addFields({ name: "New Content", value: `> ${newMsg.content}` })
+        .addFields({ name: "Channel", value: `<#${oldMsg.channel.id}>` })
         .addFields(
-            { name: 'Old Content', value: `> ${oldMsg.content}` },
-        )
-        .addFields(
-            { name: 'New Content', value: `> ${newMsg.content}`}
-        )
-        .addFields(
-            { name: 'Channel', value: `<#${oldMsg.channel.id}>`}
-        )
-        .addFields(
-            { name: 'Username', value: `<@${oldMsg.author.id}>`, inline: true },
-            { name: 'User ID', value: oldMsg.author.id, inline: true },
-            { name: 'Message ID', value: oldMsg.id, inline: true },
+            { name: "Username", value: `<@${oldMsg.author.id}>`, inline: true },
+            { name: "User ID", value: oldMsg.author.id, inline: true },
+            { name: "Message ID", value: oldMsg.id, inline: true },
             // oldMsg.author.username
         );
 
-    oldMsg.attachments.forEach(attachment => {
+    oldMsg.attachments.forEach((attachment) => {
         msgEditEmbed.addFields({ name: "Attachment", value: attachment.url });
     });
 
@@ -153,9 +153,9 @@ client.on('messageUpdate', async (oldMsg, newMsg) => {
     const channel = await client.channels.fetch(editedChannelId);
     channel.send({
         content: `EDIT: \`${oldMsg.author.username}\` (${oldMsg.author.id})`,
-        embeds: [msgEditEmbed]
+        embeds: [msgEditEmbed],
     });
-})
+});
 
 if (config.TOKEN || process.env.TOKEN) {
     client.login(config.TOKEN || process.env.TOKEN).catch((e) => {

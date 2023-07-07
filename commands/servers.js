@@ -38,7 +38,7 @@ module.exports = {
                         (c, id) => c.guilds.cache.get(id),
                         {
                             context: guildID,
-                        }
+                        },
                     );
                     return req.find((res) => !!res) || null;
                 };
@@ -54,7 +54,7 @@ module.exports = {
                 const embed = new EmbedBuilder()
                     .setTitle(`Server Info: ${guild.name}`)
                     .setDescription(
-                        `> **ID:** \`${guild.id}\`\n> **Members:** \`${guild.memberCount}\`\n> **Channels:** \`${guild.channels.length}\`\n> **Roles:** \`${guild.roles.length}\`\n> **Emojis:** \`${guild.emojis.length}\`\n> **Boosts:** \`${guild.premiumSubscriptionCount}\`\n> **Boost Level:** \`${guild.premiumTier}\``
+                        `> **ID:** \`${guild.id}\`\n> **Members:** \`${guild.memberCount}\`\n> **Channels:** \`${guild.channels.length}\`\n> **Roles:** \`${guild.roles.length}\`\n> **Emojis:** \`${guild.emojis.length}\`\n> **Boosts:** \`${guild.premiumSubscriptionCount}\`\n> **Boost Level:** \`${guild.premiumTier}\``,
                     )
                     .setColor(client.config.embedColor)
                     .setThumbnail(guild.iconURL)
@@ -84,7 +84,7 @@ module.exports = {
                 const embed = new EmbedBuilder()
                     .setTitle(`Server Info: ${guild.name}`)
                     .setDescription(
-                        `> **ID:** \`${guild.id}\`\n> **Members:** \`${guild.memberCount}\`\n> **Channels:** \`${guild.channels.cache.size}\`\n> **Roles:** \`${guild.roles.cache.size}\`\n> **Emojis:** \`${guild.emojis.cache.size}\`\n> **Boosts:** \`${guild.premiumSubscriptionCount}\`\n> **Boost Level:** \`${guild.premiumTier}\``
+                        `> **ID:** \`${guild.id}\`\n> **Members:** \`${guild.memberCount}\`\n> **Channels:** \`${guild.channels.cache.size}\`\n> **Roles:** \`${guild.roles.cache.size}\`\n> **Emojis:** \`${guild.emojis.cache.size}\`\n> **Boosts:** \`${guild.premiumSubscriptionCount}\`\n> **Boost Level:** \`${guild.premiumTier}\``,
                     )
                     .setColor(client.config.embedColor)
                     .setThumbnail(guild.iconURL())
@@ -113,7 +113,7 @@ module.exports = {
                             id: g.id,
                             memberCount: g.memberCount,
                         };
-                    })
+                    }),
                 );
                 //sort from largest to smallest
                 guilds = guilds
@@ -143,9 +143,9 @@ module.exports = {
                         .slice(page * 10, page * 10 + 10)
                         .map(
                             (g) =>
-                                `> **${g.name}** \`(${g.id})\` - \`${g.memberCount}\` members`
+                                `> **${g.name}** \`(${g.id})\` - \`${g.memberCount}\` members`,
                         )
-                        .join("\n")
+                        .join("\n"),
                 )
                 .setColor(client.config.embedColor)
                 .setTimestamp();
@@ -159,7 +159,7 @@ module.exports = {
                     .setCustomId("next")
                     .setLabel("Next")
                     .setStyle(ButtonStyle.Primary)
-                    .setDisabled(page === maxPage ? true : false)
+                    .setDisabled(page === maxPage ? true : false),
             );
             const msg = await interaction
                 .reply({ embeds: [embed], components: [row], fetchReply: true })
@@ -177,13 +177,13 @@ module.exports = {
                             .slice(page * 10, page * 10 + 10)
                             .map(
                                 (g) =>
-                                    `> **${g.name}** \`(${g.id})\` - \`${g.memberCount}\` members`
+                                    `> **${g.name}** \`(${g.id})\` - \`${g.memberCount}\` members`,
                             )
-                            .join("\n")
+                            .join("\n"),
                     );
                     row.components[0].setDisabled(page === 0 ? true : false);
                     row.components[1].setDisabled(
-                        page === maxPage ? true : false
+                        page === maxPage ? true : false,
                     );
                     await i
                         .update({ embeds: [embed], components: [row] })
@@ -195,13 +195,13 @@ module.exports = {
                             .slice(page * 10, page * 10 + 10)
                             .map(
                                 (g) =>
-                                    `> **${g.name}** \`(${g.id})\` - \`${g.memberCount}\` members`
+                                    `> **${g.name}** \`(${g.id})\` - \`${g.memberCount}\` members`,
                             )
-                            .join("\n")
+                            .join("\n"),
                     );
                     row.components[0].setDisabled(page === 0 ? true : false);
                     row.components[1].setDisabled(
-                        page === maxPage ? true : false
+                        page === maxPage ? true : false,
                     );
                     await i
                         .update({ embeds: [embed], components: [row] })

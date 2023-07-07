@@ -27,7 +27,7 @@ module.exports = {
                     .catch((e) => {});
 
             let position = getSeconds(
-                interaction.options.getString("position")
+                interaction.options.getString("position"),
             );
             if (isNaN(position))
                 return interaction
@@ -39,7 +39,7 @@ module.exports = {
                 .reply({
                     content: `${lang.msg135.replace(
                         "{queue.formattedCurrentTime}",
-                        queue.formattedCurrentTime
+                        queue.formattedCurrentTime,
                     )}`,
                 })
                 .catch((e) => {});

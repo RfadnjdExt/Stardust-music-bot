@@ -24,7 +24,7 @@ module.exports = {
             const info = interaction.options.getString("info");
             if (info) {
                 const cmd_filter = client.commands.filter(
-                    (x) => x.name === info
+                    (x) => x.name === info,
                 );
                 if (!cmd_filter.length > 0)
                     return interaction
@@ -40,16 +40,16 @@ module.exports = {
                         }\`**\n> **Options:**\n${cmd?.options
                             ?.map(
                                 (x) =>
-                                    `> **\`${x.name}\` - \`${x.description}\`**`
+                                    `> **\`${x.name}\` - \`${x.description}\`**`,
                             )
-                            .join("\n")}`
+                            .join("\n")}`,
                     )
                     .setColor(client.config.embedColor)
                     .setTimestamp();
                 return interaction.reply({ embeds: [embed] }).catch((e) => {});
             } else {
                 const commands = client.commands.filter(
-                    (x) => x.showHelp !== false
+                    (x) => x.showHelp !== false,
                 );
 
                 const embed = new EmbedBuilder()

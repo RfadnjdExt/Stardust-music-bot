@@ -134,7 +134,7 @@ module.exports = {
                     for (let i = 0; i < playlist.length; i++) {
                         if (
                             playlist[i]?.playlist?.filter(
-                                (p) => p.name === name
+                                (p) => p.name === name,
                             )?.length > 0
                         ) {
                             return interaction
@@ -173,7 +173,7 @@ module.exports = {
                                 },
                             },
                         },
-                        { upsert: true }
+                        { upsert: true },
                     )
                     .catch((e) => {});
 
@@ -203,7 +203,7 @@ module.exports = {
                         .catch((e) => {});
 
                 const music_filter = playlist?.musics?.filter(
-                    (m) => m.playlist_name === name
+                    (m) => m.playlist_name === name,
                 );
                 if (music_filter?.length > 0) {
                     await db.playlist
@@ -215,7 +215,7 @@ module.exports = {
                                         playlist_name: name,
                                     },
                                 },
-                            }
+                            },
                         )
                         .catch((e) => {});
                 }
@@ -236,7 +236,7 @@ module.exports = {
                                 },
                             },
                         },
-                        { upsert: true }
+                        { upsert: true },
                     )
                     .catch((e) => {});
 
@@ -274,14 +274,14 @@ module.exports = {
                 let max_music = client.config.playlistSettings.maxMusic;
                 if (
                     playlist?.musics?.filter(
-                        (m) => m.playlist_name === playlist_name
+                        (m) => m.playlist_name === playlist_name,
                     ).length > max_music
                 )
                     return interaction
                         .reply({
                             content: lang.msg101.replace(
                                 "{max_music}",
-                                max_music
+                                max_music,
                             ),
                             ephemeral: true,
                         })
@@ -312,7 +312,7 @@ module.exports = {
                 const music_filter = playlist?.musics?.filter(
                     (m) =>
                         m.playlist_name === playlist_name &&
-                        m.music_name === res[0]?.name
+                        m.music_name === res[0]?.name,
                 );
                 if (music_filter?.length > 0)
                     return interaction
@@ -332,7 +332,7 @@ module.exports = {
                                 },
                             },
                         },
-                        { upsert: true }
+                        { upsert: true },
                     )
                     .catch((e) => {});
 
@@ -370,7 +370,7 @@ module.exports = {
                 const music_filter = playlist?.musics?.filter(
                     (m) =>
                         m.playlist_name === playlist_name &&
-                        m.music_name === name
+                        m.music_name === name,
                 );
                 if (!music_filter?.length > 0)
                     return interaction
@@ -394,7 +394,7 @@ module.exports = {
                                 },
                             },
                         },
-                        { upsert: true }
+                        { upsert: true },
                     )
                     .catch((e) => {});
 
@@ -427,7 +427,7 @@ module.exports = {
                             ?.length > 0
                     ) {
                         let playlist_owner_filter = playlist[i].playlist.filter(
-                            (p) => p.name === name
+                            (p) => p.name === name,
                         )[0].author;
                         let playlist_public_filter = playlist[
                             i
@@ -445,7 +445,7 @@ module.exports = {
                         }
 
                         trackl = await playlist[i]?.musics?.filter(
-                            (m) => m.playlist_name === name
+                            (m) => m.playlist_name === name,
                         );
                         if (!trackl?.length > 0)
                             return interaction
@@ -501,7 +501,7 @@ module.exports = {
                             interaction.user.displayAvatarURL({
                                 size: 2048,
                                 dynamic: true,
-                            })
+                            }),
                         )
                         .setColor(client.config.embedColor)
                         .setDescription(
@@ -510,9 +510,9 @@ module.exports = {
                                     `\n\`${sayı++}\` | [${data.music_name}](${
                                         data.music_url
                                     }) - <t:${Math.floor(
-                                        data.saveTime / 1000
-                                    )}:R>`
-                            )}`
+                                        data.saveTime / 1000,
+                                    )}:R>`,
+                            )}`,
                         )
                         .setFooter({
                             text: `${lang.msg67} ${page}/${Math.floor(a + 1)}`,
@@ -604,7 +604,7 @@ module.exports = {
                                     .setStyle(ButtonStyle.Secondary)
                                     .setEmoji("➡️")
                                     .setCustomId(forwardId)
-                                    .setDisabled(true)
+                                    .setDisabled(true),
                             );
 
                             const embed = new EmbedBuilder()
@@ -613,11 +613,11 @@ module.exports = {
                                     interaction.user.displayAvatarURL({
                                         size: 2048,
                                         dynamic: true,
-                                    })
+                                    }),
                                 )
                                 .setColor(client.config.embedColor)
                                 .setDescription(
-                                    lang.msg118.replace("{name}", name)
+                                    lang.msg118.replace("{name}", name),
                                 )
                                 .setFooter({ text: client.user.username });
                             return interaction
@@ -649,12 +649,12 @@ module.exports = {
                             (data) =>
                                 `\n**${number++} |** \`${data.name}\` - **${
                                     playlist?.musics?.filter(
-                                        (m) => m.playlist_name === data.name
+                                        (m) => m.playlist_name === data.name,
                                     )?.length || 0
                                 }** ${lang.msg116} (<t:${Math.floor(
-                                    data.createdTime / 1000
-                                )}:R>)`
-                        )}`
+                                    data.createdTime / 1000,
+                                )}:R>)`,
+                        )}`,
                     )
                     .setFooter({ text: client.user.username });
                 return interaction.reply({ embeds: [embed] }).catch((e) => {});
@@ -673,7 +673,7 @@ module.exports = {
                         .filter((d) => d.public === true)
                         .map(async (d) => {
                             let filter = data.musics.filter(
-                                (m) => m.playlist_name === d.name
+                                (m) => m.playlist_name === d.name,
                             );
                             if (filter.length > 0) {
                                 trackl.push(d);
@@ -727,7 +727,7 @@ module.exports = {
                             interaction.user.displayAvatarURL({
                                 size: 2048,
                                 dynamic: true,
-                            })
+                            }),
                         )
                         .setColor(client.config.embedColor)
                         .setDescription(
@@ -738,9 +738,9 @@ module.exports = {
                                     }\` - **${data.plays}** ${
                                         lang.msg129
                                     } (<t:${Math.floor(
-                                        data.createdTime / 1000
-                                    )}:R>)`
-                            )}`
+                                        data.createdTime / 1000,
+                                    )}:R>)`,
+                            )}`,
                         )
                         .setFooter({
                             text: `${lang.msg67} ${page}/${Math.floor(a + 1)}`,
@@ -832,7 +832,7 @@ module.exports = {
                                     .setStyle(ButtonStyle.Secondary)
                                     .setEmoji("➡️")
                                     .setCustomId(forwardId)
-                                    .setDisabled(true)
+                                    .setDisabled(true),
                             );
 
                             const embed = new EmbedBuilder()
@@ -841,7 +841,7 @@ module.exports = {
                                     interaction.user.displayAvatarURL({
                                         size: 2048,
                                         dynamic: true,
-                                    })
+                                    }),
                                 )
                                 .setColor(client.config.embedColor)
                                 .setDescription(lang.msg113)
