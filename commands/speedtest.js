@@ -7,7 +7,7 @@ module.exports = {
     permissions: "0x0000000000000800",
     run: async (client, interaction) => {
         const waitingEmbed = new EmbedBuilder()
-            .setTitle("Fireball - Speedtest Bot")
+            .setTitle("Speedtest")
             .setColor(0xffff00)
             .setDescription("The Speedtest is running, please wait a bit.")
             .setThumbnail(
@@ -23,7 +23,7 @@ module.exports = {
         try {
             const speed = await speedTest({ acceptLicense: true });
             const finishEmbed = new EmbedBuilder()
-                .setTitle("Fireball - Speedtest Bot")
+                .setTitle("Speedtest")
                 .setColor(0xffff00)
                 .setDescription(
                     `The Speedtest is done, here is the result:\n\nServer: ${speed.server.name} | ${speed.server.location} | ID: ${speed.server.id}\nPacket-Loss: ${speed.packetLoss}`,
@@ -38,7 +38,7 @@ module.exports = {
         } catch (error) {
             console.error("Speedtest error:", error);
             const errorEmbed = new EmbedBuilder()
-                .setTitle("Fireball - Speedtest Bot")
+                .setTitle("Speedtest")
                 .setColor(0xff0000)
                 .setDescription(
                     "An error occurred while running the Speedtest. Please try again later.",
