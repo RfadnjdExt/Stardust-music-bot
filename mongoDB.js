@@ -21,13 +21,6 @@ const snipe = Schema(
     { timestamps: true }
 );
 
-const mongoUrl = "mongodb://localhost:27017/mydatabase";
-
-const options = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-};
-
 const db = mongoose.connection;
 
 db.once("open", () => {
@@ -39,10 +32,7 @@ db.on("error", err => {
 });
 
 module.exports = {
-    musicbot: model("musicbot", musicbot),
-    playlist: model("playlist", playlist),
     snipe: model("snipe", snipe),
-    connectToDB: function () {
-        mongoose.connect(mongoUrl, options);
-    }
+    musicbot: model("musicbot", musicbot),
+    playlist: model("playlist", playlist)
 };
