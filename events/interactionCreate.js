@@ -147,7 +147,6 @@ module.exports = async (client, interaction) => {
                                                 }
                                             }
                                         }
-                                        console.log(props);
                                         return props.run(client, interaction);
                                     } else {
                                         return interaction?.reply({
