@@ -43,7 +43,8 @@
         "start": "node start.js",
         "dev": "nodemon start.js",
         "pretty": "prettier --check */*.js",
-        "pretty:write": "prettier --write */*.js"
+        "pretty:write": "prettier --write */*.js",
+        "gen-config": "node genConfig.js"
     },
     "author": "Rizki Pratama",
     "license": "ISC",
