@@ -14,13 +14,12 @@ module.exports = async client => {
                 await rest.put(Routes.applicationCommands(client.user.id), {
                     body
                 });
-                console.log(lang.loadslash);
             } catch (err) {
                 console.log(lang.error3 + err);
             }
         })();
 
-        console.log(client.user.username + lang.ready);
+        console.log(client.user.username);
 
         setInterval(
             () =>
