@@ -9,13 +9,13 @@ module.exports = {
             name: "info",
             description: "The command you want to get information about.",
             type: ApplicationCommandOptionType.String,
-            required: false,
-        },
+            required: false
+        }
     ],
     showHelp: false,
     run: async (client, interaction) => {
         let lang = await db?.musicbot?.findOne({
-            guildID: interaction.guild.id,
+            guildID: interaction.guild.id
         });
         lang = lang?.language || client.language;
         lang = require(`../languages/${lang}.js`);
@@ -23,34 +23,23 @@ module.exports = {
             const { EmbedBuilder } = require("discord.js");
             const info = interaction.options.getString("info");
             if (info) {
-                const cmd_filter = client.commands.filter(
-                    (x) => x.name === info,
-                );
+                const cmd_filter = client.commands.filter(x => x.name === info);
                 if (!cmd_filter.length > 0)
-                    return interaction
-                        .reply({ content: lang.msg127, ephemeral: true })
-                        .catch((e) => {});
+                    return interaction.reply({ content: lang.msg127, ephemeral: true }).catch(e => {});
 
                 const cmd = cmd_filter[0];
                 const embed = new EmbedBuilder()
                     .setTitle(`Command Info: ${cmd.name}`)
                     .setDescription(
-                        `> **Description: \`${
-                            cmd.description
-                        }\`**\n> **Options:**\n${cmd?.options
-                            ?.map(
-                                (x) =>
-                                    `> **\`${x.name}\` - \`${x.description}\`**`,
-                            )
-                            .join("\n")}`,
+                        `> **Description: \`${cmd.description}\`**\n> **Options:**\n${cmd?.options
+                            ?.map(x => `> **\`${x.name}\` - \`${x.description}\`**`)
+                            .join("\n")}`
                     )
                     .setColor(client.config.embedColor)
                     .setTimestamp();
-                return interaction.reply({ embeds: [embed] }).catch((e) => {});
+                return interaction.reply({ embeds: [embed] }).catch(e => {});
             } else {
-                const commands = client.commands.filter(
-                    (x) => x.showHelp !== false,
-                );
+                const commands = client.commands.filter(x => x.showHelp !== false);
 
                 const embed = new EmbedBuilder()
                     .setColor(client.config.embedColor)
@@ -60,18 +49,16 @@ module.exports = {
                     .addFields([
                         {
                             name: `${lang.msg33}`,
-                            value: commands
-                                .map((x) => `\`/${x.name}\``)
-                                .join(" | "),
-                        },
+                            value: commands.map(x => `\`/${x.name}\``).join(" | ")
+                        }
                     ])
                     .setTimestamp()
                     .setFooter({ text: client.user.username });
-                interaction.reply({ embeds: [embed] }).catch((e) => {});
+                interaction.reply({ embeds: [embed] }).catch(e => {});
             }
         } catch (e) {
             const errorNotifer = require("../functions.js");
             errorNotifer(client, interaction, e, lang);
         }
-    },
+    }
 };

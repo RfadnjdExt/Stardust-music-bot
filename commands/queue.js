@@ -1,9 +1,4 @@
-const {
-    EmbedBuilder,
-    ActionRowBuilder,
-    ButtonBuilder,
-    ButtonStyle,
-} = require("discord.js");
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 const db = require("../mongoDB");
 module.exports = {
     name: "queue",
@@ -12,20 +7,15 @@ module.exports = {
     options: [],
     run: async (client, interaction) => {
         let lang = await db?.musicbot?.findOne({
-            guildID: interaction.guild.id,
+            guildID: interaction.guild.id
         });
         lang = lang?.language || client.language;
         lang = require(`../languages/${lang}.js`);
         try {
             const queue = client.player.getQueue(interaction.guild.id);
             if (!queue || !queue.playing)
-                return interaction
-                    .reply({ content: lang.msg5, ephemeral: true })
-                    .catch((e) => {});
-            if (!queue.songs[0])
-                return interaction
-                    .reply({ content: lang.msg63, ephemeral: true })
-                    .catch((e) => {});
+                return interaction.reply({ content: lang.msg5, ephemeral: true }).catch(e => {});
+            if (!queue.songs[0]) return interaction.reply({ content: lang.msg63, ephemeral: true }).catch(e => {});
 
             const trackl = [];
             queue.songs.map(async (track, i) => {
@@ -34,7 +24,7 @@ module.exports = {
                     author: track.uploader.name,
                     user: track.user,
                     url: track.url,
-                    duration: track.duration,
+                    duration: track.duration
                 });
             });
 
@@ -43,52 +33,47 @@ module.exports = {
             const backButton = new ButtonBuilder({
                 style: ButtonStyle.Secondary,
                 emoji: "⬅️",
-                customId: backId,
+                customId: backId
             });
 
             const deleteButton = new ButtonBuilder({
                 style: ButtonStyle.Secondary,
                 emoji: "❌",
-                customId: "close",
+                customId: "close"
             });
 
             const forwardButton = new ButtonBuilder({
                 style: ButtonStyle.Secondary,
                 emoji: "➡️",
-                customId: forwardId,
+                customId: forwardId
             });
 
             let kaçtane = 8;
             let page = 1;
             let a = trackl.length / kaçtane;
 
-            const generateEmbed = async (start) => {
+            const generateEmbed = async start => {
                 let sayı = page === 1 ? 1 : page * kaçtane - kaçtane + 1;
                 const current = trackl.slice(start, start + kaçtane);
                 if (!current || !current?.length > 0)
-                    return interaction
-                        .reply({ content: lang.msg63, ephemeral: true })
-                        .catch((e) => {});
+                    return interaction.reply({ content: lang.msg63, ephemeral: true }).catch(e => {});
                 return new EmbedBuilder()
                     .setTitle(`${lang.msg64} - ${interaction.guild.name}`)
                     .setThumbnail(
                         interaction.guild.iconURL({
                             size: 2048,
-                            dynamic: true,
-                        }),
+                            dynamic: true
+                        })
                     )
                     .setColor(client.config.embedColor)
                     .setDescription(
                         `${lang.msg65}: \`${queue.songs[0].name}\`
     ${current.map(
-        (data) =>
-            `\n\`${sayı++}\` | [${data.title}](${data.url}) | **${
-                data.author
-            }** (${lang.msg66} <@${data.user.id}>)`,
-    )}`,
+        data => `\n\`${sayı++}\` | [${data.title}](${data.url}) | **${data.author}** (${lang.msg66} <@${data.user.id}>)`
+    )}`
                     )
                     .setFooter({
-                        text: `${lang.msg67} ${page}/${Math.floor(a + 1)}`,
+                        text: `${lang.msg67} ${page}/${Math.floor(a + 1)}`
                     });
             };
 
@@ -101,28 +86,28 @@ module.exports = {
                         ? []
                         : [
                               new ActionRowBuilder({
-                                  components: [deleteButton, forwardButton],
-                              }),
+                                  components: [deleteButton, forwardButton]
+                              })
                           ],
-                    fetchReply: true,
+                    fetchReply: true
                 })
-                .then(async (Message) => {
-                    const filter = (i) => i.user.id === interaction.user.id;
+                .then(async Message => {
+                    const filter = i => i.user.id === interaction.user.id;
                     const collector = Message.createMessageComponentCollector({
                         filter,
-                        time: 120000,
+                        time: 120000
                     });
 
                     let currentIndex = 0;
-                    collector.on("collect", async (button) => {
+                    collector.on("collect", async button => {
                         if (button?.customId === "close") {
                             collector?.stop();
                             return button
                                 ?.reply({
                                     content: lang.msg68,
-                                    ephemeral: true,
+                                    ephemeral: true
                                 })
-                                .catch((e) => {});
+                                .catch(e => {});
                         } else {
                             if (button.customId === backId) {
                                 page--;
@@ -131,9 +116,7 @@ module.exports = {
                                 page++;
                             }
 
-                            button.customId === backId
-                                ? (currentIndex -= kaçtane)
-                                : (currentIndex += kaçtane);
+                            button.customId === backId ? (currentIndex -= kaçtane) : (currentIndex += kaçtane);
 
                             await interaction
                                 .editReply({
@@ -141,24 +124,19 @@ module.exports = {
                                     components: [
                                         new ActionRowBuilder({
                                             components: [
-                                                ...(currentIndex
-                                                    ? [backButton]
-                                                    : []),
+                                                ...(currentIndex ? [backButton] : []),
                                                 deleteButton,
-                                                ...(currentIndex + kaçtane <
-                                                trackl.length
-                                                    ? [forwardButton]
-                                                    : []),
-                                            ],
-                                        }),
-                                    ],
+                                                ...(currentIndex + kaçtane < trackl.length ? [forwardButton] : [])
+                                            ]
+                                        })
+                                    ]
                                 })
-                                .catch((e) => {});
-                            await button?.deferUpdate().catch((e) => {});
+                                .catch(e => {});
+                            await button?.deferUpdate().catch(e => {});
                         }
                     });
 
-                    collector.on("end", async (button) => {
+                    collector.on("end", async button => {
                         button = new ActionRowBuilder().addComponents(
                             new ButtonBuilder()
                                 .setStyle(ButtonStyle.Secondary)
@@ -174,7 +152,7 @@ module.exports = {
                                 .setStyle(ButtonStyle.Secondary)
                                 .setEmoji("➡️")
                                 .setCustomId(forwardId)
-                                .setDisabled(true),
+                                .setDisabled(true)
                         );
 
                         const embed = new EmbedBuilder()
@@ -182,8 +160,8 @@ module.exports = {
                             .setThumbnail(
                                 interaction?.guild?.iconURL({
                                     size: 2048,
-                                    dynamic: true,
-                                }),
+                                    dynamic: true
+                                })
                             )
                             .setColor(client.config.embedColor)
                             .setDescription(lang.msg70)
@@ -191,15 +169,15 @@ module.exports = {
                         return interaction
                             ?.editReply({
                                 embeds: [embed],
-                                components: [button],
+                                components: [button]
                             })
-                            .catch((e) => {});
+                            .catch(e => {});
                     });
                 })
-                .catch((e) => {});
+                .catch(e => {});
         } catch (e) {
             const errorNotifer = require("../functions.js");
             errorNotifer(client, interaction, e, lang);
         }
-    },
+    }
 };

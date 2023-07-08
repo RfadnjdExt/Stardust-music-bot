@@ -161,6 +161,6 @@ const language = {
     msg146: "Latensi Jaringan:",
     msg147: "Memori Digunakan:",
     msg148: "Undang Bot:",
-    msg149: "Dukung Paladen:",
+    msg149: "Dukung Paladen:"
 };
 module.exports = language;

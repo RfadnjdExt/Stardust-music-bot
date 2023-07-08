@@ -7,7 +7,7 @@ module.exports = {
     options: [],
     run: async (client, interaction) => {
         let lang = await db?.musicbot?.findOne({
-            guildID: interaction.guild.id,
+            guildID: interaction.guild.id
         });
         lang = lang?.language || client.language;
         lang = require(`../languages/${lang}.js`);
@@ -16,7 +16,7 @@ module.exports = {
             const start = Date.now();
             interaction
                 .reply("Pong!")
-                .then((msg) => {
+                .then(msg => {
                     const end = Date.now();
                     const embed = new EmbedBuilder()
                         .setColor(client.config.embedColor)
@@ -25,27 +25,25 @@ module.exports = {
                         .addFields([
                             {
                                 name: lang.msg49,
-                                value: `\`${end - start}ms\` 🛰️`,
+                                value: `\`${end - start}ms\` 🛰️`
                             },
                             {
                                 name: lang.msg50,
-                                value: `\`${Date.now() - start}ms\` 🛰️`,
+                                value: `\`${Date.now() - start}ms\` 🛰️`
                             },
                             {
                                 name: lang.msg51,
-                                value: `\`${Math.round(client.ws.ping)}ms\` 🛰️`,
-                            },
+                                value: `\`${Math.round(client.ws.ping)}ms\` 🛰️`
+                            }
                         ])
                         .setTimestamp()
                         .setFooter({ text: client.user.username });
-                    return interaction
-                        .editReply({ embeds: [embed] })
-                        .catch((e) => {});
+                    return interaction.editReply({ embeds: [embed] }).catch(e => {});
                 })
-                .catch((err) => {});
+                .catch(err => {});
         } catch (e) {
             const errorNotifer = require("../functions.js");
             errorNotifer(client, interaction, e, lang);
         }
-    },
+    }
 };

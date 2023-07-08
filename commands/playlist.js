@@ -3,7 +3,7 @@ const {
     EmbedBuilder,
     ActionRowBuilder,
     ButtonBuilder,
-    ButtonStyle,
+    ButtonStyle
 } = require("discord.js");
 const db = require("../mongoDB");
 module.exports = {
@@ -17,19 +17,17 @@ module.exports = {
             options: [
                 {
                     name: "name",
-                    description:
-                        "TWrite the name of the playlist you want to create.",
+                    description: "TWrite the name of the playlist you want to create.",
                     type: ApplicationCommandOptionType.String,
-                    required: true,
+                    required: true
                 },
                 {
                     name: "public",
-                    description:
-                        "Make the playlist public. (true=public playlist, false=private playlist)",
+                    description: "Make the playlist public. (true=public playlist, false=private playlist)",
                     type: ApplicationCommandOptionType.Boolean,
-                    required: true,
-                },
-            ],
+                    required: true
+                }
+            ]
         },
         {
             name: "delete",
@@ -38,12 +36,11 @@ module.exports = {
             options: [
                 {
                     name: "name",
-                    description:
-                        "Write the name of the playlist you want to delete.",
+                    description: "Write the name of the playlist you want to delete.",
                     type: ApplicationCommandOptionType.String,
-                    required: true,
-                },
-            ],
+                    required: true
+                }
+            ]
         },
         {
             name: "add-music",
@@ -54,15 +51,15 @@ module.exports = {
                     name: "playlist-name",
                     description: "Write a playlist name.",
                     type: ApplicationCommandOptionType.String,
-                    required: true,
+                    required: true
                 },
                 {
                     name: "name",
                     description: "Write a music name or a music link.",
                     type: ApplicationCommandOptionType.String,
-                    required: true,
-                },
-            ],
+                    required: true
+                }
+            ]
         },
         {
             name: "delete-music",
@@ -73,15 +70,15 @@ module.exports = {
                     name: "playlist-name",
                     description: "Write a playlist name.",
                     type: ApplicationCommandOptionType.String,
-                    required: true,
+                    required: true
                 },
                 {
                     name: "name",
                     description: "Write a music name.",
                     type: ApplicationCommandOptionType.String,
-                    required: true,
-                },
-            ],
+                    required: true
+                }
+            ]
         },
         {
             name: "list",
@@ -92,27 +89,27 @@ module.exports = {
                     name: "name",
                     description: "Write a playlist name.",
                     type: ApplicationCommandOptionType.String,
-                    required: true,
-                },
-            ],
+                    required: true
+                }
+            ]
         },
         {
             name: "lists",
             description: "Browse all your playlists.",
             type: ApplicationCommandOptionType.Subcommand,
-            options: [],
+            options: []
         },
         {
             name: "top",
             description: "Most popular playlists.",
             type: ApplicationCommandOptionType.Subcommand,
-            options: [],
-        },
+            options: []
+        }
     ],
     permissions: "0x0000000000000800",
     run: async (client, interaction) => {
         let lang = await db?.musicbot?.findOne({
-            guildID: interaction.guild.id,
+            guildID: interaction.guild.id
         });
         lang = lang?.language || client.language;
         lang = require(`../languages/${lang}.js`);
@@ -121,42 +118,28 @@ module.exports = {
             if (stp === "create") {
                 let name = interaction.options.getString("name");
                 let public = interaction.options.getBoolean("public");
-                if (!name)
-                    return interaction
-                        .reply({ content: lang.msg91, ephemeral: true })
-                        .catch((e) => {});
+                if (!name) return interaction.reply({ content: lang.msg91, ephemeral: true }).catch(e => {});
                 const userplaylist = await db.playlist.findOne({
-                    userID: interaction.user.id,
+                    userID: interaction.user.id
                 });
 
-                const playlist = await db.playlist.find().catch((e) => {});
+                const playlist = await db.playlist.find().catch(e => {});
                 if (playlist?.length > 0) {
                     for (let i = 0; i < playlist.length; i++) {
-                        if (
-                            playlist[i]?.playlist?.filter(
-                                (p) => p.name === name,
-                            )?.length > 0
-                        ) {
-                            return interaction
-                                .reply({ content: lang.msg92, ephemeral: true })
-                                .catch((e) => {});
+                        if (playlist[i]?.playlist?.filter(p => p.name === name)?.length > 0) {
+                            return interaction.reply({ content: lang.msg92, ephemeral: true }).catch(e => {});
                         }
                     }
                 }
 
-                if (
-                    userplaylist?.playlist?.length >=
-                    client.config.playlistSettings.maxPlaylist
-                )
-                    return interaction
-                        .reply({ content: lang.msg93, ephemeral: true })
-                        .catch((e) => {});
+                if (userplaylist?.playlist?.length >= client.config.playlistSettings.maxPlaylist)
+                    return interaction.reply({ content: lang.msg93, ephemeral: true }).catch(e => {});
 
                 await interaction
                     .reply({
-                        content: `<@${interaction.member.id}>, ${lang.msg94}`,
+                        content: `<@${interaction.member.id}>, ${lang.msg94}`
                     })
-                    .catch((e) => {});
+                    .catch(e => {});
 
                 await db.playlist
                     .updateOne(
@@ -169,42 +152,30 @@ module.exports = {
                                     authorTag: interaction.user.tag,
                                     public: public,
                                     plays: 0,
-                                    createdTime: Date.now(),
-                                },
-                            },
+                                    createdTime: Date.now()
+                                }
+                            }
                         },
-                        { upsert: true },
+                        { upsert: true }
                     )
-                    .catch((e) => {});
+                    .catch(e => {});
 
                 await interaction
                     .editReply({
-                        content: `<@${interaction.member.id}>, ${lang.msg95}`,
+                        content: `<@${interaction.member.id}>, ${lang.msg95}`
                     })
-                    .catch((e) => {});
+                    .catch(e => {});
             }
 
             if (stp === "delete") {
                 let name = interaction.options.getString("name");
-                if (!name)
-                    return interaction
-                        .reply({ content: lang.msg91, ephemeral: true })
-                        .catch((e) => {});
+                if (!name) return interaction.reply({ content: lang.msg91, ephemeral: true }).catch(e => {});
 
-                const playlist = await db.playlist
-                    .findOne({ userID: interaction.user.id })
-                    .catch((e) => {});
-                if (
-                    !playlist?.playlist?.filter((p) => p.name === name).length >
-                    0
-                )
-                    return interaction
-                        .reply({ content: lang.msg96, ephemeral: true })
-                        .catch((e) => {});
+                const playlist = await db.playlist.findOne({ userID: interaction.user.id }).catch(e => {});
+                if (!playlist?.playlist?.filter(p => p.name === name).length > 0)
+                    return interaction.reply({ content: lang.msg96, ephemeral: true }).catch(e => {});
 
-                const music_filter = playlist?.musics?.filter(
-                    (m) => m.playlist_name === name,
-                );
+                const music_filter = playlist?.musics?.filter(m => m.playlist_name === name);
                 if (music_filter?.length > 0) {
                     await db.playlist
                         .updateOne(
@@ -212,19 +183,19 @@ module.exports = {
                             {
                                 $pull: {
                                     musics: {
-                                        playlist_name: name,
-                                    },
-                                },
-                            },
+                                        playlist_name: name
+                                    }
+                                }
+                            }
                         )
-                        .catch((e) => {});
+                        .catch(e => {});
                 }
 
                 await interaction
                     .reply({
-                        content: `<@${interaction.member.id}>, ${lang.msg97}`,
+                        content: `<@${interaction.member.id}>, ${lang.msg97}`
                     })
-                    .catch((e) => {});
+                    .catch(e => {});
 
                 await db.playlist
                     .updateOne(
@@ -232,92 +203,63 @@ module.exports = {
                         {
                             $pull: {
                                 playlist: {
-                                    name: name,
-                                },
-                            },
+                                    name: name
+                                }
+                            }
                         },
-                        { upsert: true },
+                        { upsert: true }
                     )
-                    .catch((e) => {});
+                    .catch(e => {});
 
                 await interaction
                     .editReply({
-                        content: `<@${interaction.member.id}>, ${lang.msg98}`,
+                        content: `<@${interaction.member.id}>, ${lang.msg98}`
                     })
-                    .catch((e) => {});
+                    .catch(e => {});
             }
 
             if (stp === "add-music") {
                 let name = interaction.options.getString("name");
-                if (!name)
-                    return interaction
-                        .reply({ content: lang.msg99, ephemeral: true })
-                        .catch((e) => {});
-                let playlist_name =
-                    interaction.options.getString("playlist-name");
-                if (!playlist_name)
-                    return interaction
-                        .reply({ content: lang.msg100, ephemeral: true })
-                        .catch((e) => {});
+                if (!name) return interaction.reply({ content: lang.msg99, ephemeral: true }).catch(e => {});
+                let playlist_name = interaction.options.getString("playlist-name");
+                if (!playlist_name) return interaction.reply({ content: lang.msg100, ephemeral: true }).catch(e => {});
 
-                const playlist = await db.playlist
-                    .findOne({ userID: interaction.user.id })
-                    .catch((e) => {});
-                if (
-                    !playlist?.playlist?.filter((p) => p.name === playlist_name)
-                        .length > 0
-                )
-                    return interaction
-                        .reply({ content: lang.msg96, ephemeral: true })
-                        .catch((e) => {});
+                const playlist = await db.playlist.findOne({ userID: interaction.user.id }).catch(e => {});
+                if (!playlist?.playlist?.filter(p => p.name === playlist_name).length > 0)
+                    return interaction.reply({ content: lang.msg96, ephemeral: true }).catch(e => {});
 
                 let max_music = client.config.playlistSettings.maxMusic;
-                if (
-                    playlist?.musics?.filter(
-                        (m) => m.playlist_name === playlist_name,
-                    ).length > max_music
-                )
+                if (playlist?.musics?.filter(m => m.playlist_name === playlist_name).length > max_music)
                     return interaction
                         .reply({
-                            content: lang.msg101.replace(
-                                "{max_music}",
-                                max_music,
-                            ),
-                            ephemeral: true,
+                            content: lang.msg101.replace("{max_music}", max_music),
+                            ephemeral: true
                         })
-                        .catch((e) => {});
+                        .catch(e => {});
                 let res;
                 try {
                     res = await client.player.search(name, {
                         member: interaction.member,
                         textChannel: interaction.channel,
-                        interaction,
+                        interaction
                     });
                 } catch (e) {
-                    return interaction
-                        .reply({ content: lang.msg74, ephemeral: true })
-                        .catch((e) => {});
+                    return interaction.reply({ content: lang.msg74, ephemeral: true }).catch(e => {});
                 }
                 if (!res || !res.length || !res.length > 1)
-                    return interaction
-                        .reply({ content: lang.msg74, ephemeral: true })
-                        .catch((e) => {});
+                    return interaction.reply({ content: lang.msg74, ephemeral: true }).catch(e => {});
 
                 await interaction
                     .reply({
-                        content: `<@${interaction.member.id}>, ${lang.msg102}`,
+                        content: `<@${interaction.member.id}>, ${lang.msg102}`
                     })
-                    .catch((e) => {});
+                    .catch(e => {});
 
                 const music_filter = playlist?.musics?.filter(
-                    (m) =>
-                        m.playlist_name === playlist_name &&
-                        m.music_name === res[0]?.name,
+                    m => m.playlist_name === playlist_name && m.music_name === res[0]?.name
                 );
                 if (music_filter?.length > 0)
-                    return interaction
-                        .editReply({ content: lang.msg104, ephemeral: true })
-                        .catch((e) => {});
+                    return interaction.editReply({ content: lang.msg104, ephemeral: true }).catch(e => {});
 
                 await db.playlist
                     .updateOne(
@@ -328,60 +270,42 @@ module.exports = {
                                     playlist_name: playlist_name,
                                     music_name: res[0]?.name,
                                     music_url: res[0]?.url,
-                                    saveTime: Date.now(),
-                                },
-                            },
+                                    saveTime: Date.now()
+                                }
+                            }
                         },
-                        { upsert: true },
+                        { upsert: true }
                     )
-                    .catch((e) => {});
+                    .catch(e => {});
 
                 await interaction
                     .editReply({
-                        content: `<@${interaction.member.id}>, \`${res[0]?.name}\` ${lang.msg105}`,
+                        content: `<@${interaction.member.id}>, \`${res[0]?.name}\` ${lang.msg105}`
                     })
-                    .catch((e) => {});
+                    .catch(e => {});
             }
 
             if (stp === "delete-music") {
                 let name = interaction.options.getString("name");
-                if (!name)
-                    return interaction
-                        .reply({ content: lang.msg99, ephemeral: true })
-                        .catch((e) => {});
-                let playlist_name =
-                    interaction.options.getString("playlist-name");
-                if (!playlist_name)
-                    return interaction
-                        .reply({ content: lang.msg106, ephemeral: true })
-                        .catch((e) => {});
+                if (!name) return interaction.reply({ content: lang.msg99, ephemeral: true }).catch(e => {});
+                let playlist_name = interaction.options.getString("playlist-name");
+                if (!playlist_name) return interaction.reply({ content: lang.msg106, ephemeral: true }).catch(e => {});
 
-                const playlist = await db.playlist
-                    .findOne({ userID: interaction.user.id })
-                    .catch((e) => {});
-                if (
-                    !playlist?.playlist?.filter((p) => p.name === playlist_name)
-                        .length > 0
-                )
-                    return interaction
-                        .reply({ content: lang.msg96, ephemeral: true })
-                        .catch((e) => {});
+                const playlist = await db.playlist.findOne({ userID: interaction.user.id }).catch(e => {});
+                if (!playlist?.playlist?.filter(p => p.name === playlist_name).length > 0)
+                    return interaction.reply({ content: lang.msg96, ephemeral: true }).catch(e => {});
 
                 const music_filter = playlist?.musics?.filter(
-                    (m) =>
-                        m.playlist_name === playlist_name &&
-                        m.music_name === name,
+                    m => m.playlist_name === playlist_name && m.music_name === name
                 );
                 if (!music_filter?.length > 0)
-                    return interaction
-                        .reply({ content: lang.msg54, ephemeral: true })
-                        .catch((e) => {});
+                    return interaction.reply({ content: lang.msg54, ephemeral: true }).catch(e => {});
 
                 await interaction
                     .reply({
-                        content: `<@${interaction.member.id}>, ${lang.msg108}`,
+                        content: `<@${interaction.member.id}>, ${lang.msg108}`
                     })
-                    .catch((e) => {});
+                    .catch(e => {});
 
                 await db.playlist
                     .updateOne(
@@ -390,76 +314,60 @@ module.exports = {
                             $pull: {
                                 musics: {
                                     playlist_name: playlist_name,
-                                    music_name: name,
-                                },
-                            },
+                                    music_name: name
+                                }
+                            }
                         },
-                        { upsert: true },
+                        { upsert: true }
                     )
-                    .catch((e) => {});
+                    .catch(e => {});
 
                 await interaction
                     .editReply({
-                        content: `<@${interaction.member.id}>, ${lang.msg109}`,
+                        content: `<@${interaction.member.id}>, ${lang.msg109}`
                     })
-                    .catch((e) => {});
+                    .catch(e => {});
             }
 
             if (stp === "list") {
                 let name = interaction.options.getString("name");
-                if (!name)
-                    return interaction
-                        .reply({ content: lang.msg110, ephemeral: true })
-                        .catch((e) => {});
+                if (!name) return interaction.reply({ content: lang.msg110, ephemeral: true }).catch(e => {});
 
                 let trackl;
 
-                const playlist = await db.playlist.find().catch((e) => {});
+                const playlist = await db.playlist.find().catch(e => {});
                 if (!playlist?.length > 0)
-                    return interaction
-                        .reply({ content: lang.msg96, ephemeral: true })
-                        .catch((e) => {});
+                    return interaction.reply({ content: lang.msg96, ephemeral: true }).catch(e => {});
 
                 let arr = 0;
                 for (let i = 0; i < playlist.length; i++) {
-                    if (
-                        playlist[i]?.playlist?.filter((p) => p.name === name)
-                            ?.length > 0
-                    ) {
-                        let playlist_owner_filter = playlist[i].playlist.filter(
-                            (p) => p.name === name,
-                        )[0].author;
-                        let playlist_public_filter = playlist[
-                            i
-                        ].playlist.filter((p) => p.name === name)[0].public;
+                    if (playlist[i]?.playlist?.filter(p => p.name === name)?.length > 0) {
+                        let playlist_owner_filter = playlist[i].playlist.filter(p => p.name === name)[0].author;
+                        let playlist_public_filter = playlist[i].playlist.filter(p => p.name === name)[0].public;
 
                         if (playlist_owner_filter !== interaction.member.id) {
                             if (playlist_public_filter === false) {
                                 return interaction
                                     .reply({
                                         content: lang.msg53,
-                                        ephemeral: true,
+                                        ephemeral: true
                                     })
-                                    .catch((e) => {});
+                                    .catch(e => {});
                             }
                         }
 
-                        trackl = await playlist[i]?.musics?.filter(
-                            (m) => m.playlist_name === name,
-                        );
+                        trackl = await playlist[i]?.musics?.filter(m => m.playlist_name === name);
                         if (!trackl?.length > 0)
                             return interaction
                                 .reply({
                                     content: lang.msg111,
-                                    ephemeral: true,
+                                    ephemeral: true
                                 })
-                                .catch((e) => {});
+                                .catch(e => {});
                     } else {
                         arr++;
                         if (arr === playlist.length) {
-                            return interaction
-                                .reply({ content: lang.msg58, ephemeral: true })
-                                .catch((e) => {});
+                            return interaction.reply({ content: lang.msg58, ephemeral: true }).catch(e => {});
                         }
                     }
                 }
@@ -469,53 +377,49 @@ module.exports = {
                 const backButton = new ButtonBuilder({
                     style: ButtonStyle.Secondary,
                     emoji: "⬅️",
-                    customId: backId,
+                    customId: backId
                 });
 
                 const deleteButton = new ButtonBuilder({
                     style: ButtonStyle.Secondary,
                     emoji: "❌",
-                    customId: "close",
+                    customId: "close"
                 });
 
                 const forwardButton = new ButtonBuilder({
                     style: ButtonStyle.Secondary,
                     emoji: "➡️",
-                    customId: forwardId,
+                    customId: forwardId
                 });
 
                 let kaçtane = 8;
                 let page = 1;
                 let a = trackl.length / kaçtane;
 
-                const generateEmbed = async (start) => {
+                const generateEmbed = async start => {
                     let sayı = page === 1 ? 1 : page * kaçtane - kaçtane + 1;
                     const current = trackl.slice(start, start + kaçtane);
                     if (!current || !current?.length > 0)
-                        return interaction
-                            .reply({ content: lang.msg111, ephemeral: true })
-                            .catch((e) => {});
+                        return interaction.reply({ content: lang.msg111, ephemeral: true }).catch(e => {});
                     return new EmbedBuilder()
                         .setTitle(`${name}`)
                         .setThumbnail(
                             interaction.user.displayAvatarURL({
                                 size: 2048,
-                                dynamic: true,
-                            }),
+                                dynamic: true
+                            })
                         )
                         .setColor(client.config.embedColor)
                         .setDescription(
                             `${lang.msg119}\n${current.map(
-                                (data) =>
-                                    `\n\`${sayı++}\` | [${data.music_name}](${
-                                        data.music_url
-                                    }) - <t:${Math.floor(
-                                        data.saveTime / 1000,
-                                    )}:R>`,
-                            )}`,
+                                data =>
+                                    `\n\`${sayı++}\` | [${data.music_name}](${data.music_url}) - <t:${Math.floor(
+                                        data.saveTime / 1000
+                                    )}:R>`
+                            )}`
                         )
                         .setFooter({
-                            text: `${lang.msg67} ${page}/${Math.floor(a + 1)}`,
+                            text: `${lang.msg67} ${page}/${Math.floor(a + 1)}`
                         });
                 };
 
@@ -528,29 +432,28 @@ module.exports = {
                             ? []
                             : [
                                   new ActionRowBuilder({
-                                      components: [deleteButton, forwardButton],
-                                  }),
+                                      components: [deleteButton, forwardButton]
+                                  })
                               ],
-                        fetchReply: true,
+                        fetchReply: true
                     })
-                    .then(async (Message) => {
-                        const filter = (i) => i.user.id === interaction.user.id;
-                        const collector =
-                            Message.createMessageComponentCollector({
-                                filter,
-                                time: 65000,
-                            });
+                    .then(async Message => {
+                        const filter = i => i.user.id === interaction.user.id;
+                        const collector = Message.createMessageComponentCollector({
+                            filter,
+                            time: 65000
+                        });
 
                         let currentIndex = 0;
-                        collector.on("collect", async (button) => {
+                        collector.on("collect", async button => {
                             if (button.customId === "close") {
                                 collector.stop();
                                 return button
                                     .reply({
                                         content: `${lang.msg68}`,
-                                        ephemeral: true,
+                                        ephemeral: true
                                     })
-                                    .catch((e) => {});
+                                    .catch(e => {});
                             } else {
                                 if (button.customId === backId) {
                                     page--;
@@ -559,36 +462,27 @@ module.exports = {
                                     page++;
                                 }
 
-                                button.customId === backId
-                                    ? (currentIndex -= kaçtane)
-                                    : (currentIndex += kaçtane);
+                                button.customId === backId ? (currentIndex -= kaçtane) : (currentIndex += kaçtane);
 
                                 await interaction
                                     .editReply({
-                                        embeds: [
-                                            await generateEmbed(currentIndex),
-                                        ],
+                                        embeds: [await generateEmbed(currentIndex)],
                                         components: [
                                             new ActionRowBuilder({
                                                 components: [
-                                                    ...(currentIndex
-                                                        ? [backButton]
-                                                        : []),
+                                                    ...(currentIndex ? [backButton] : []),
                                                     deleteButton,
-                                                    ...(currentIndex + kaçtane <
-                                                    trackl.length
-                                                        ? [forwardButton]
-                                                        : []),
-                                                ],
-                                            }),
-                                        ],
+                                                    ...(currentIndex + kaçtane < trackl.length ? [forwardButton] : [])
+                                                ]
+                                            })
+                                        ]
                                     })
-                                    .catch((e) => {});
-                                await button.deferUpdate().catch((e) => {});
+                                    .catch(e => {});
+                                await button.deferUpdate().catch(e => {});
                             }
                         });
 
-                        collector.on("end", async (button) => {
+                        collector.on("end", async button => {
                             button = new ActionRowBuilder().addComponents(
                                 new ButtonBuilder()
                                     .setStyle(ButtonStyle.Secondary)
@@ -604,7 +498,7 @@ module.exports = {
                                     .setStyle(ButtonStyle.Secondary)
                                     .setEmoji("➡️")
                                     .setCustomId(forwardId)
-                                    .setDisabled(true),
+                                    .setDisabled(true)
                             );
 
                             const embed = new EmbedBuilder()
@@ -612,33 +506,27 @@ module.exports = {
                                 .setThumbnail(
                                     interaction.user.displayAvatarURL({
                                         size: 2048,
-                                        dynamic: true,
-                                    }),
+                                        dynamic: true
+                                    })
                                 )
                                 .setColor(client.config.embedColor)
-                                .setDescription(
-                                    lang.msg118.replace("{name}", name),
-                                )
+                                .setDescription(lang.msg118.replace("{name}", name))
                                 .setFooter({ text: client.user.username });
                             return interaction
                                 .editReply({
                                     embeds: [embed],
-                                    components: [button],
+                                    components: [button]
                                 })
-                                .catch((e) => {});
+                                .catch(e => {});
                         });
                     })
-                    .catch((e) => {});
+                    .catch(e => {});
             }
 
             if (stp === "lists") {
-                const playlist = await db?.playlist
-                    ?.findOne({ userID: interaction.user.id })
-                    .catch((e) => {});
+                const playlist = await db?.playlist?.findOne({ userID: interaction.user.id }).catch(e => {});
                 if (!playlist?.playlist?.length > 0)
-                    return interaction
-                        .reply({ content: lang.msg117, ephemeral: true })
-                        .catch((e) => {});
+                    return interaction.reply({ content: lang.msg117, ephemeral: true }).catch(e => {});
 
                 let number = 1;
                 const embed = new EmbedBuilder()
@@ -646,47 +534,37 @@ module.exports = {
                     .setColor(client.config.embedColor)
                     .setDescription(
                         `${lang.msg119}\n${playlist?.playlist?.map(
-                            (data) =>
+                            data =>
                                 `\n**${number++} |** \`${data.name}\` - **${
-                                    playlist?.musics?.filter(
-                                        (m) => m.playlist_name === data.name,
-                                    )?.length || 0
-                                }** ${lang.msg116} (<t:${Math.floor(
-                                    data.createdTime / 1000,
-                                )}:R>)`,
-                        )}`,
+                                    playlist?.musics?.filter(m => m.playlist_name === data.name)?.length || 0
+                                }** ${lang.msg116} (<t:${Math.floor(data.createdTime / 1000)}:R>)`
+                        )}`
                     )
                     .setFooter({ text: client.user.username });
-                return interaction.reply({ embeds: [embed] }).catch((e) => {});
+                return interaction.reply({ embeds: [embed] }).catch(e => {});
             }
 
             if (stp === "top") {
-                let playlists = await db?.playlist?.find().catch((e) => {});
+                let playlists = await db?.playlist?.find().catch(e => {});
                 if (!playlists?.length > 0)
-                    return interaction
-                        .reply({ content: lang.msg114, ephemeral: true })
-                        .catch((e) => {});
+                    return interaction.reply({ content: lang.msg114, ephemeral: true }).catch(e => {});
 
                 let trackl = [];
-                playlists.map(async (data) => {
+                playlists.map(async data => {
                     data.playlist
-                        .filter((d) => d.public === true)
-                        .map(async (d) => {
-                            let filter = data.musics.filter(
-                                (m) => m.playlist_name === d.name,
-                            );
+                        .filter(d => d.public === true)
+                        .map(async d => {
+                            let filter = data.musics.filter(m => m.playlist_name === d.name);
                             if (filter.length > 0) {
                                 trackl.push(d);
                             }
                         });
                 });
 
-                trackl = trackl.filter((a) => a.plays > 0);
+                trackl = trackl.filter(a => a.plays > 0);
 
                 if (!trackl?.length > 0)
-                    return interaction
-                        .reply({ content: lang.msg114, ephemeral: true })
-                        .catch((e) => {});
+                    return interaction.reply({ content: lang.msg114, ephemeral: true }).catch(e => {});
 
                 trackl = trackl.sort((a, b) => b.plays - a.plays);
 
@@ -695,55 +573,49 @@ module.exports = {
                 const backButton = new ButtonBuilder({
                     style: ButtonStyle.Secondary,
                     emoji: "⬅️",
-                    customId: backId,
+                    customId: backId
                 });
 
                 const deleteButton = new ButtonBuilder({
                     style: ButtonStyle.Secondary,
                     emoji: "❌",
-                    customId: "close",
+                    customId: "close"
                 });
 
                 const forwardButton = new ButtonBuilder({
                     style: ButtonStyle.Secondary,
                     emoji: "➡️",
-                    customId: forwardId,
+                    customId: forwardId
                 });
 
                 let kaçtane = 8;
                 let page = 1;
                 let a = trackl.length / kaçtane;
 
-                const generateEmbed = async (start) => {
+                const generateEmbed = async start => {
                     let sayı = page === 1 ? 1 : page * kaçtane - kaçtane + 1;
                     const current = trackl.slice(start, start + kaçtane);
                     if (!current || !current?.length > 0)
-                        return interaction
-                            .reply({ content: lang.msg114, ephemeral: true })
-                            .catch((e) => {});
+                        return interaction.reply({ content: lang.msg114, ephemeral: true }).catch(e => {});
                     return new EmbedBuilder()
                         .setTitle(lang.msg112)
                         .setThumbnail(
                             interaction.user.displayAvatarURL({
                                 size: 2048,
-                                dynamic: true,
-                            }),
+                                dynamic: true
+                            })
                         )
                         .setColor(client.config.embedColor)
                         .setDescription(
                             `${lang.msg119}\n${current.map(
-                                (data) =>
-                                    `\n**${sayı++} |** \`${data.name}\` By. \`${
-                                        data.authorTag
-                                    }\` - **${data.plays}** ${
+                                data =>
+                                    `\n**${sayı++} |** \`${data.name}\` By. \`${data.authorTag}\` - **${data.plays}** ${
                                         lang.msg129
-                                    } (<t:${Math.floor(
-                                        data.createdTime / 1000,
-                                    )}:R>)`,
-                            )}`,
+                                    } (<t:${Math.floor(data.createdTime / 1000)}:R>)`
+                            )}`
                         )
                         .setFooter({
-                            text: `${lang.msg67} ${page}/${Math.floor(a + 1)}`,
+                            text: `${lang.msg67} ${page}/${Math.floor(a + 1)}`
                         });
                 };
 
@@ -756,29 +628,28 @@ module.exports = {
                             ? []
                             : [
                                   new ActionRowBuilder({
-                                      components: [deleteButton, forwardButton],
-                                  }),
+                                      components: [deleteButton, forwardButton]
+                                  })
                               ],
-                        fetchReply: true,
+                        fetchReply: true
                     })
-                    .then(async (Message) => {
-                        const filter = (i) => i.user.id === interaction.user.id;
-                        const collector =
-                            Message.createMessageComponentCollector({
-                                filter,
-                                time: 120000,
-                            });
+                    .then(async Message => {
+                        const filter = i => i.user.id === interaction.user.id;
+                        const collector = Message.createMessageComponentCollector({
+                            filter,
+                            time: 120000
+                        });
 
                         let currentIndex = 0;
-                        collector.on("collect", async (button) => {
+                        collector.on("collect", async button => {
                             if (button.customId === "close") {
                                 collector.stop();
                                 return button
                                     .reply({
                                         content: `${lang.msg68}`,
-                                        ephemeral: true,
+                                        ephemeral: true
                                     })
-                                    .catch((e) => {});
+                                    .catch(e => {});
                             } else {
                                 if (button.customId === backId) {
                                     page--;
@@ -787,36 +658,27 @@ module.exports = {
                                     page++;
                                 }
 
-                                button.customId === backId
-                                    ? (currentIndex -= kaçtane)
-                                    : (currentIndex += kaçtane);
+                                button.customId === backId ? (currentIndex -= kaçtane) : (currentIndex += kaçtane);
 
                                 await interaction
                                     .editReply({
-                                        embeds: [
-                                            await generateEmbed(currentIndex),
-                                        ],
+                                        embeds: [await generateEmbed(currentIndex)],
                                         components: [
                                             new ActionRowBuilder({
                                                 components: [
-                                                    ...(currentIndex
-                                                        ? [backButton]
-                                                        : []),
+                                                    ...(currentIndex ? [backButton] : []),
                                                     deleteButton,
-                                                    ...(currentIndex + kaçtane <
-                                                    trackl.length
-                                                        ? [forwardButton]
-                                                        : []),
-                                                ],
-                                            }),
-                                        ],
+                                                    ...(currentIndex + kaçtane < trackl.length ? [forwardButton] : [])
+                                                ]
+                                            })
+                                        ]
                                     })
-                                    .catch((e) => {});
-                                await button.deferUpdate().catch((e) => {});
+                                    .catch(e => {});
+                                await button.deferUpdate().catch(e => {});
                             }
                         });
 
-                        collector.on("end", async (button) => {
+                        collector.on("end", async button => {
                             button = new ActionRowBuilder().addComponents(
                                 new ButtonBuilder()
                                     .setStyle(ButtonStyle.Secondary)
@@ -832,7 +694,7 @@ module.exports = {
                                     .setStyle(ButtonStyle.Secondary)
                                     .setEmoji("➡️")
                                     .setCustomId(forwardId)
-                                    .setDisabled(true),
+                                    .setDisabled(true)
                             );
 
                             const embed = new EmbedBuilder()
@@ -840,8 +702,8 @@ module.exports = {
                                 .setThumbnail(
                                     interaction.user.displayAvatarURL({
                                         size: 2048,
-                                        dynamic: true,
-                                    }),
+                                        dynamic: true
+                                    })
                                 )
                                 .setColor(client.config.embedColor)
                                 .setDescription(lang.msg113)
@@ -849,16 +711,16 @@ module.exports = {
                             return interaction
                                 .editReply({
                                     embeds: [embed],
-                                    components: [button],
+                                    components: [button]
                                 })
-                                .catch((e) => {});
+                                .catch(e => {});
                         });
                     })
-                    .catch((e) => {});
+                    .catch(e => {});
             }
         } catch (e) {
             const errorNotifer = require("../functions.js");
             errorNotifer(client, interaction, e, lang);
         }
-    },
+    }
 };

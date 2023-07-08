@@ -161,6 +161,6 @@ const language = {
     msg146: "Ping:",
     msg147: "Memory Usage:",
     msg148: "Invite Bot:",
-    msg149: "Support Server:",
+    msg149: "Support Server:"
 };
 module.exports = language;

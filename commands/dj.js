@@ -14,20 +14,20 @@ module.exports = {
                     name: "role",
                     description: "Mention a DJ role.",
                     type: ApplicationCommandOptionType.Role,
-                    required: true,
-                },
-            ],
+                    required: true
+                }
+            ]
         },
         {
             name: "reset",
             description: "Allows you to turn off the DJ role.",
             type: ApplicationCommandOptionType.Subcommand,
-            options: [],
-        },
+            options: []
+        }
     ],
     run: async (client, interaction) => {
         let lang = await db?.musicbot?.findOne({
-            guildID: interaction.guild.id,
+            guildID: interaction.guild.id
         });
         lang = lang?.language || client.language;
         lang = require(`../languages/${lang}.js`);
@@ -35,31 +35,28 @@ module.exports = {
             let stp = interaction.options.getSubcommand();
             if (stp === "set") {
                 const role = interaction.options.getRole("role");
-                if (!role)
-                    return interaction.reply(lang.msg26).catch((e) => {});
+                if (!role) return interaction.reply(lang.msg26).catch(e => {});
 
                 await db.musicbot
                     .updateOne(
                         { guildID: interaction.guild.id },
                         {
                             $set: {
-                                role: role.id,
-                            },
+                                role: role.id
+                            }
                         },
-                        { upsert: true },
+                        { upsert: true }
                     )
-                    .catch((e) => {});
+                    .catch(e => {});
                 return await interaction
                     .reply({
                         content: lang.msg25.replace("{role}", role.id),
-                        ephemeral: true,
+                        ephemeral: true
                     })
-                    .catch((e) => {});
+                    .catch(e => {});
             }
             if (stp === "reset") {
-                const data = await db.musicbot
-                    .findOne({ guildID: interaction.guild.id })
-                    .catch((e) => {});
+                const data = await db.musicbot.findOne({ guildID: interaction.guild.id }).catch(e => {});
 
                 if (data?.role) {
                     await db.musicbot
@@ -67,24 +64,20 @@ module.exports = {
                             { guildID: interaction.guild.id },
                             {
                                 $set: {
-                                    role: "",
-                                },
+                                    role: ""
+                                }
                             },
-                            { upsert: true },
+                            { upsert: true }
                         )
-                        .catch((e) => {});
-                    return await interaction
-                        .reply({ content: lang.msg27, ephemeral: true })
-                        .catch((e) => {});
+                        .catch(e => {});
+                    return await interaction.reply({ content: lang.msg27, ephemeral: true }).catch(e => {});
                 } else {
-                    return await interaction
-                        .reply({ content: lang.msg28, ephemeral: true })
-                        .catch((e) => {});
+                    return await interaction.reply({ content: lang.msg28, ephemeral: true }).catch(e => {});
                 }
             }
         } catch (e) {
             const errorNotifer = require("../functions.js");
             errorNotifer(client, interaction, e, lang);
         }
-    },
+    }
 };

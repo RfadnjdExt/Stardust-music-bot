@@ -1,10 +1,4 @@
-const {
-    ModalBuilder,
-    TextInputBuilder,
-    TextInputStyle,
-    ActionRowBuilder,
-    EmbedBuilder,
-} = require("discord.js");
+const { ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, EmbedBuilder } = require("discord.js");
 const db = require("../mongoDB");
 module.exports = {
     name: "save",
@@ -13,7 +7,7 @@ module.exports = {
     options: [],
     run: async (client, interaction) => {
         let lang = await db?.musicbot?.findOne({
-            guildID: interaction.guild.id,
+            guildID: interaction.guild.id
         });
         lang = lang?.language || client.language;
         lang = require(`../languages/${lang}.js`);
@@ -21,13 +15,9 @@ module.exports = {
         try {
             const queue = client.player.getQueue(interaction.guild.id);
             if (!queue || !queue.playing)
-                return interaction
-                    .reply({ content: lang.msg5, ephemeral: true })
-                    .catch((e) => {});
+                return interaction.reply({ content: lang.msg5, ephemeral: true }).catch(e => {});
 
-            const Modal = new ModalBuilder()
-                .setCustomId("playlistModal")
-                .setTitle(lang.msg6);
+            const Modal = new ModalBuilder().setCustomId("playlistModal").setTitle(lang.msg6);
 
             const PlayList = new TextInputBuilder()
                 .setCustomId("playlist")
@@ -37,10 +27,10 @@ module.exports = {
 
             const PlaylistRow = new ActionRowBuilder().addComponents(PlayList);
             Modal.addComponents(PlaylistRow);
-            await interaction.showModal(Modal).catch((e) => {});
+            await interaction.showModal(Modal).catch(e => {});
         } catch (e) {
             const errorNotifer = require("../functions.js");
             errorNotifer(client, interaction, e, lang);
         }
-    },
+    }
 };

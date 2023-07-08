@@ -161,6 +161,6 @@ const language = {
     msg146: "ネットワークレイテンシ:",
     msg147: "使用メモリ:",
     msg148: "ボットの招待:",
-    msg149: "パラデンのサポート:",
+    msg149: "パラデンのサポート:"
 };
 module.exports = language;

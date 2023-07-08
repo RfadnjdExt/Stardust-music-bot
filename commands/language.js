@@ -7,23 +7,14 @@ module.exports = {
     voiceChannel: false,
     run: async (client, interaction) => {
         let lang = await db?.musicbot?.findOne({
-            guildID: interaction?.guild?.id,
+            guildID: interaction?.guild?.id
         });
         lang = lang?.language || client.language;
         lang = require(`../languages/${lang}.js`);
         try {
-            const {
-                EmbedBuilder,
-                ActionRowBuilder,
-                ButtonBuilder,
-                ButtonStyle,
-            } = require("discord.js");
+            const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
             let buttons = new ActionRowBuilder().addComponents(
-                new ButtonBuilder()
-                    .setLabel("Türkçe")
-                    .setCustomId("tr")
-                    .setStyle(ButtonStyle.Secondary)
-                    .setEmoji("🇹🇷"),
+                new ButtonBuilder().setLabel("Türkçe").setCustomId("tr").setStyle(ButtonStyle.Secondary).setEmoji("🇹🇷"),
                 new ButtonBuilder()
                     .setLabel("English")
                     .setCustomId("en")
@@ -43,7 +34,7 @@ module.exports = {
                     .setLabel("Français")
                     .setCustomId("fr")
                     .setStyle(ButtonStyle.Secondary)
-                    .setEmoji("🇫🇷"),
+                    .setEmoji("🇫🇷")
             );
 
             let buttons2 = new ActionRowBuilder().addComponents(
@@ -67,11 +58,7 @@ module.exports = {
                     .setCustomId("id")
                     .setStyle(ButtonStyle.Secondary)
                     .setEmoji("🇮🇩"),
-                new ButtonBuilder()
-                    .setLabel("Español")
-                    .setCustomId("es")
-                    .setStyle(ButtonStyle.Secondary)
-                    .setEmoji("🇪🇸"),
+                new ButtonBuilder().setLabel("Español").setCustomId("es").setStyle(ButtonStyle.Secondary).setEmoji("🇪🇸")
             );
 
             let buttons3 = new ActionRowBuilder().addComponents(
@@ -85,16 +72,12 @@ module.exports = {
                     .setCustomId("de")
                     .setStyle(ButtonStyle.Secondary)
                     .setEmoji("🇩🇪"),
-                new ButtonBuilder()
-                    .setLabel("日本語")
-                    .setCustomId("ja")
-                    .setStyle(ButtonStyle.Secondary)
-                    .setEmoji("🇯🇵"),
+                new ButtonBuilder().setLabel("日本語").setCustomId("ja").setStyle(ButtonStyle.Secondary).setEmoji("🇯🇵"),
                 new ButtonBuilder()
                     .setLabel("Norwegian")
                     .setCustomId("no")
                     .setStyle(ButtonStyle.Secondary)
-                    .setEmoji("🇳🇴"),
+                    .setEmoji("🇳🇴")
             );
 
             let embed = new EmbedBuilder()
@@ -105,16 +88,16 @@ module.exports = {
             interaction
                 ?.reply({
                     embeds: [embed],
-                    components: [buttons, buttons2, buttons3],
+                    components: [buttons, buttons2, buttons3]
                 })
-                .then(async (Message) => {
-                    const filter = (i) => i.user.id === interaction?.user?.id;
+                .then(async Message => {
+                    const filter = i => i.user.id === interaction?.user?.id;
                     let col = await Message.createMessageComponentCollector({
                         filter,
-                        time: 30000,
+                        time: 30000
                     });
 
-                    col.on("collect", async (button) => {
+                    col.on("collect", async button => {
                         if (button.user.id !== interaction?.user?.id) return;
                         switch (button.customId) {
                             case "tr":
@@ -123,21 +106,21 @@ module.exports = {
                                         { guildID: interaction?.guild?.id },
                                         {
                                             $set: {
-                                                language: "tr",
-                                            },
+                                                language: "tr"
+                                            }
                                         },
-                                        { upsert: true },
+                                        { upsert: true }
                                     )
-                                    .catch((e) => {});
+                                    .catch(e => {});
                                 await interaction
                                     ?.editReply({
                                         content: `Botun dili başarıyla türkçe oldu. :flag_tr:`,
                                         embeds: [],
                                         components: [],
-                                        ephemeral: true,
+                                        ephemeral: true
                                     })
-                                    .catch((e) => {});
-                                await button?.deferUpdate().catch((e) => {});
+                                    .catch(e => {});
+                                await button?.deferUpdate().catch(e => {});
                                 await col?.stop();
                                 break;
 
@@ -147,21 +130,21 @@ module.exports = {
                                         { guildID: interaction?.guild?.id },
                                         {
                                             $set: {
-                                                language: "en",
-                                            },
+                                                language: "en"
+                                            }
                                         },
-                                        { upsert: true },
+                                        { upsert: true }
                                     )
-                                    .catch((e) => {});
+                                    .catch(e => {});
                                 await interaction
                                     ?.editReply({
                                         content: `Bot language successfully changed to english. :flag_gb:`,
                                         embeds: [],
                                         components: [],
-                                        ephemeral: true,
+                                        ephemeral: true
                                     })
-                                    .catch((e) => {});
-                                await button?.deferUpdate().catch((e) => {});
+                                    .catch(e => {});
+                                await button?.deferUpdate().catch(e => {});
                                 await col?.stop();
                                 break;
 
@@ -171,21 +154,21 @@ module.exports = {
                                         { guildID: interaction?.guild?.id },
                                         {
                                             $set: {
-                                                language: "nl",
-                                            },
+                                                language: "nl"
+                                            }
                                         },
-                                        { upsert: true },
+                                        { upsert: true }
                                     )
-                                    .catch((e) => {});
+                                    .catch(e => {});
                                 await interaction
                                     ?.editReply({
                                         content: `De taal van de boot werd veranderd in nederlands. :flag_nl:`,
                                         embeds: [],
                                         components: [],
-                                        ephemeral: true,
+                                        ephemeral: true
                                     })
-                                    .catch((e) => {});
-                                await button?.deferUpdate().catch((e) => {});
+                                    .catch(e => {});
+                                await button?.deferUpdate().catch(e => {});
                                 await col?.stop();
                                 break;
 
@@ -195,21 +178,21 @@ module.exports = {
                                         { guildID: interaction?.guild?.id },
                                         {
                                             $set: {
-                                                language: "fr",
-                                            },
+                                                language: "fr"
+                                            }
                                         },
-                                        { upsert: true },
+                                        { upsert: true }
                                     )
-                                    .catch((e) => {});
+                                    .catch(e => {});
                                 await interaction
                                     ?.editReply({
                                         content: `La langue du bot a été modifiée avec succès en français. :flag_fr:`,
                                         embeds: [],
                                         components: [],
-                                        ephemeral: true,
+                                        ephemeral: true
                                     })
-                                    .catch((e) => {});
-                                await button?.deferUpdate().catch((e) => {});
+                                    .catch(e => {});
+                                await button?.deferUpdate().catch(e => {});
                                 await col?.stop();
                                 break;
 
@@ -219,21 +202,21 @@ module.exports = {
                                         { guildID: interaction?.guild?.id },
                                         {
                                             $set: {
-                                                language: "pt",
-                                            },
+                                                language: "pt"
+                                            }
                                         },
-                                        { upsert: true },
+                                        { upsert: true }
                                     )
-                                    .catch((e) => {});
+                                    .catch(e => {});
                                 await interaction
                                     ?.editReply({
                                         content: `Língua do bot definida para Português - Brasil com sucesso. :flag_br:`,
                                         embeds: [],
                                         components: [],
-                                        ephemeral: true,
+                                        ephemeral: true
                                     })
-                                    .catch((e) => {});
-                                await button?.deferUpdate().catch((e) => {});
+                                    .catch(e => {});
+                                await button?.deferUpdate().catch(e => {});
                                 await col?.stop();
                                 break;
 
@@ -243,21 +226,21 @@ module.exports = {
                                         { guildID: interaction?.guild?.id },
                                         {
                                             $set: {
-                                                language: "ar",
-                                            },
+                                                language: "ar"
+                                            }
                                         },
-                                        { upsert: true },
+                                        { upsert: true }
                                     )
-                                    .catch((e) => {});
+                                    .catch(e => {});
                                 await interaction
                                     ?.editReply({
                                         content: `تم تغيير لغة البوت بنجاح إلى اللغة العربية: :flag_ps:`,
                                         embeds: [],
                                         components: [],
-                                        ephemeral: true,
+                                        ephemeral: true
                                     })
-                                    .catch((e) => {});
-                                await button?.deferUpdate().catch((e) => {});
+                                    .catch(e => {});
+                                await button?.deferUpdate().catch(e => {});
                                 await col?.stop();
                                 break;
 
@@ -267,21 +250,21 @@ module.exports = {
                                         { guildID: interaction?.guild?.id },
                                         {
                                             $set: {
-                                                language: "zh_TW",
-                                            },
+                                                language: "zh_TW"
+                                            }
                                         },
-                                        { upsert: true },
+                                        { upsert: true }
                                     )
-                                    .catch((e) => {});
+                                    .catch(e => {});
                                 await interaction
                                     ?.editReply({
                                         content: `機器人成功設為正體中文 :flag_tw:`,
                                         embeds: [],
                                         components: [],
-                                        ephemeral: true,
+                                        ephemeral: true
                                     })
-                                    .catch((e) => {});
-                                await button?.deferUpdate().catch((e) => {});
+                                    .catch(e => {});
+                                await button?.deferUpdate().catch(e => {});
                                 await col?.stop();
                                 break;
 
@@ -291,21 +274,21 @@ module.exports = {
                                         { guildID: interaction?.guild?.id },
                                         {
                                             $set: {
-                                                language: "it",
-                                            },
+                                                language: "it"
+                                            }
                                         },
-                                        { upsert: true },
+                                        { upsert: true }
                                     )
-                                    .catch((e) => {});
+                                    .catch(e => {});
                                 await interaction
                                     ?.editReply({
                                         content: `La lingua del bot è stata cambiata in italiano. :flag_it:`,
                                         embeds: [],
                                         components: [],
-                                        ephemeral: true,
+                                        ephemeral: true
                                     })
-                                    .catch((e) => {});
-                                await button?.deferUpdate().catch((e) => {});
+                                    .catch(e => {});
+                                await button?.deferUpdate().catch(e => {});
                                 await col?.stop();
                                 break;
 
@@ -315,21 +298,21 @@ module.exports = {
                                         { guildID: interaction?.guild?.id },
                                         {
                                             $set: {
-                                                language: "id",
-                                            },
+                                                language: "id"
+                                            }
                                         },
-                                        { upsert: true },
+                                        { upsert: true }
                                     )
-                                    .catch((e) => {});
+                                    .catch(e => {});
                                 await interaction
                                     ?.editReply({
                                         content: `Bahasa bot dibuat dalam bahasa indonesia. :flag_id:`,
                                         embeds: [],
                                         components: [],
-                                        ephemeral: true,
+                                        ephemeral: true
                                     })
-                                    .catch((e) => {});
-                                await button?.deferUpdate().catch((e) => {});
+                                    .catch(e => {});
+                                await button?.deferUpdate().catch(e => {});
                                 await col?.stop();
                                 break;
 
@@ -339,21 +322,21 @@ module.exports = {
                                         { guildID: interaction?.guild?.id },
                                         {
                                             $set: {
-                                                language: "es",
-                                            },
+                                                language: "es"
+                                            }
                                         },
-                                        { upsert: true },
+                                        { upsert: true }
                                     )
-                                    .catch((e) => {});
+                                    .catch(e => {});
                                 await interaction
                                     ?.editReply({
                                         content: `El idioma del bot se cambió con éxito al español. :flag_es:`,
                                         embeds: [],
                                         components: [],
-                                        ephemeral: true,
+                                        ephemeral: true
                                     })
-                                    .catch((e) => {});
-                                await button?.deferUpdate().catch((e) => {});
+                                    .catch(e => {});
+                                await button?.deferUpdate().catch(e => {});
                                 await col?.stop();
                                 break;
 
@@ -363,21 +346,21 @@ module.exports = {
                                         { guildID: interaction?.guild?.id },
                                         {
                                             $set: {
-                                                language: "ru",
-                                            },
+                                                language: "ru"
+                                            }
                                         },
-                                        { upsert: true },
+                                        { upsert: true }
                                     )
-                                    .catch((e) => {});
+                                    .catch(e => {});
                                 await interaction
                                     ?.editReply({
                                         content: `Язык бота успешно изменен на русский. :flag_ru:`,
                                         embeds: [],
                                         components: [],
-                                        ephemeral: true,
+                                        ephemeral: true
                                     })
-                                    .catch((e) => {});
-                                await button?.deferUpdate().catch((e) => {});
+                                    .catch(e => {});
+                                await button?.deferUpdate().catch(e => {});
                                 await col?.stop();
                                 break;
 
@@ -387,21 +370,21 @@ module.exports = {
                                         { guildID: interaction?.guild?.id },
                                         {
                                             $set: {
-                                                language: "de",
-                                            },
+                                                language: "de"
+                                            }
                                         },
-                                        { upsert: true },
+                                        { upsert: true }
                                     )
-                                    .catch((e) => {});
+                                    .catch(e => {});
                                 await interaction
                                     ?.editReply({
                                         content: `Die Sprache des Bots wurde erfolgreich auf Deutsch geändert. :flag_de:`,
                                         embeds: [],
                                         components: [],
-                                        ephemeral: true,
+                                        ephemeral: true
                                     })
-                                    .catch((e) => {});
-                                await button?.deferUpdate().catch((e) => {});
+                                    .catch(e => {});
+                                await button?.deferUpdate().catch(e => {});
                                 await col?.stop();
                                 break;
 
@@ -411,21 +394,21 @@ module.exports = {
                                         { guildID: interaction?.guild?.id },
                                         {
                                             $set: {
-                                                language: "ja",
-                                            },
+                                                language: "ja"
+                                            }
                                         },
-                                        { upsert: true },
+                                        { upsert: true }
                                     )
-                                    .catch((e) => {});
+                                    .catch(e => {});
                                 await interaction
                                     ?.editReply({
                                         content: `言語を日本語に設定しました。 :flag_jp:`,
                                         embeds: [],
                                         components: [],
-                                        ephemeral: true,
+                                        ephemeral: true
                                     })
-                                    .catch((e) => {});
-                                await button?.deferUpdate().catch((e) => {});
+                                    .catch(e => {});
+                                await button?.deferUpdate().catch(e => {});
                                 await col?.stop();
                                 break;
 
@@ -435,21 +418,21 @@ module.exports = {
                                         { guildID: interaction?.guild?.id },
                                         {
                                             $set: {
-                                                language: "no",
-                                            },
+                                                language: "no"
+                                            }
                                         },
-                                        { upsert: true },
+                                        { upsert: true }
                                     )
-                                    .catch((e) => {});
+                                    .catch(e => {});
                                 await interaction
                                     ?.editReply({
                                         content: `Språket mitt er nå Norsk. :flag_no:`,
                                         embeds: [],
                                         components: [],
-                                        ephemeral: true,
+                                        ephemeral: true
                                     })
-                                    .catch((e) => {});
-                                await button?.deferUpdate().catch((e) => {});
+                                    .catch(e => {});
+                                await button?.deferUpdate().catch(e => {});
                                 await col?.stop();
                                 break;
                         }
@@ -462,7 +445,7 @@ module.exports = {
                                     .setStyle(ButtonStyle.Secondary)
                                     .setLabel(lang.msg45)
                                     .setCustomId("timeend")
-                                    .setDisabled(true),
+                                    .setDisabled(true)
                             );
 
                             embed = new EmbedBuilder()
@@ -474,18 +457,18 @@ module.exports = {
                             await interaction
                                 ?.editReply({
                                     embeds: [embed],
-                                    components: [buttons],
+                                    components: [buttons]
                                 })
-                                .catch((e) => {});
+                                .catch(e => {});
                         }
                     });
                 })
-                .catch((e) => {
+                .catch(e => {
                     console.log(e);
                 });
         } catch (e) {
             const errorNotifer = require("../functions.js");
             errorNotifer(client, interaction, e, lang);
         }
-    },
+    }
 };

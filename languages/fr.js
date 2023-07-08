@@ -2,8 +2,7 @@ const language = {
     loadevent: "Événement de joueur chargé",
     loadcmd: "Commande chargée",
     ready: " connecté avec succès.",
-    loadslash:
-        "Les commandes d'application [/] ont été rechargées avec succès.",
+    loadslash: "Les commandes d'application [/] ont été rechargées avec succès.",
     error1: "Le jeton de bot que vous avez entré dans votre projet est incorrect ou les intentions de votre bot sont désactivées!",
     error2: "Veuillez définir le jeton du bot dans token.js ou dans votre fichier .env dans votre projet!",
     loadclientevent: "Événement client chargé",
@@ -150,6 +149,6 @@ const language = {
     msg134: "Utilisation incorrecte. Exemple : `5:50` | `1:12:43`",
     msg135: "Le temps de lecture a été défini avec succès sur {queue.formattedCurrentTime}",
     msg136: "La lecture automatique est activée maintenant.",
-    msg137: "La lecture automatique est désactivée maintenant.",
+    msg137: "La lecture automatique est désactivée maintenant."
 };
 module.exports = language;

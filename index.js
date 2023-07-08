@@ -7,14 +7,10 @@ if (config.shardManager.shardStatus == true) {
         totalShards: "auto",
         token: config.TOKEN || process.env.TOKEN,
         timeout: -1,
-        respawn: true,
+        respawn: true
     });
-    manager.on("shardCreate", (shard) =>
-        console.log(`Launched shard ${shard.id}`),
-    );
-    manager
-        .spawn({ amount: "auto", delay: 5500, timeout: 30000 })
-        .catch((e) => console.log(e));
+    manager.on("shardCreate", shard => console.log(`Launched shard ${shard.id}`));
+    manager.spawn({ amount: "auto", delay: 5500, timeout: 30000 }).catch(e => console.log(e));
     // manager.spawn();
 } else {
     require("./bot.js");

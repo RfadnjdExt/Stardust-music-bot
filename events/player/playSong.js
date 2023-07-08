@@ -1,7 +1,7 @@
 const db = require("../../mongoDB");
 module.exports = async (client, queue, song) => {
     let lang = await db?.musicbot?.findOne({
-        guildID: queue?.textChannel?.guild?.id,
+        guildID: queue?.textChannel?.guild?.id
     });
     lang = lang?.language || client.language;
     lang = require(`../../languages/${lang}.js`);
@@ -14,10 +14,10 @@ module.exports = async (client, queue, song) => {
                         .replace("{track?.title}", song?.name)
                         .replace(
                             "{queue?.connection.channel.name}",
-                            `<#${queue.voice.connection.joinConfig.channelId}>`,
-                        ),
+                            `<#${queue.voice.connection.joinConfig.channelId}>`
+                        )
                 })
-                .catch((e) => {});
+                .catch(e => {});
         }
     }
 };

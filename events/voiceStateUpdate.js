@@ -4,25 +4,17 @@ module.exports = async (client, oldState, newState) => {
     if (queue || queue?.playing) {
         if (client?.config?.opt?.voiceConfig?.leaveOnEmpty?.status === true) {
             let lang = await db?.musicbot?.findOne({
-                guildID: queue?.textChannel?.guild?.id,
+                guildID: queue?.textChannel?.guild?.id
             });
             lang = lang?.language || client.language;
             lang = require(`../languages/${lang}.js`);
             setTimeout(async () => {
-                let botChannel = oldState?.guild?.channels?.cache?.get(
-                    queue?.voice?.connection?.joinConfig?.channelId,
-                );
+                let botChannel = oldState?.guild?.channels?.cache?.get(queue?.voice?.connection?.joinConfig?.channelId);
                 if (botChannel) {
                     if (botChannel.id == oldState.channelId)
-                        if (
-                            botChannel?.members?.find(
-                                (x) => x == client?.user?.id,
-                            )
-                        ) {
+                        if (botChannel?.members?.find(x => x == client?.user?.id)) {
                             if (botChannel?.members?.size == 1) {
-                                await queue?.textChannel
-                                    ?.send({ content: `${lang.msg15}` })
-                                    .catch((e) => {});
+                                await queue?.textChannel?.send({ content: `${lang.msg15}` }).catch(e => {});
                                 if (queue || queue?.playing) {
                                     return queue?.stop(oldState.guild.id);
                                 }
@@ -34,7 +26,7 @@ module.exports = async (client, oldState, newState) => {
 
         if (newState.id === client.user.id) {
             let lang = await db?.musicbot?.findOne({
-                guildID: queue?.textChannel?.guild?.id,
+                guildID: queue?.textChannel?.guild?.id
             });
             lang = lang?.language || client.language;
             lang = require(`../languages/${lang}.js`);
@@ -45,9 +37,7 @@ module.exports = async (client, oldState, newState) => {
                     } catch (e) {
                         return;
                     }
-                    await queue?.textChannel
-                        ?.send({ content: `${lang.msg128}` })
-                        .catch((e) => {});
+                    await queue?.textChannel?.send({ content: `${lang.msg128}` }).catch(e => {});
                 }
             }
             if (oldState.serverMute === true && newState.serverMute === false) {

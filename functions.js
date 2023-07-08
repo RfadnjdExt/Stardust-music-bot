@@ -1,5 +1,5 @@
 function errorNotifer(client, interaction, e, lang) {
-    console.log(client, interaction, e, lang)
+    console.log(client, interaction, e, lang);
     const { EmbedBuilder } = require("discord.js");
     if (client.errorLog) {
         if (client.shard) {
@@ -12,35 +12,35 @@ function errorNotifer(client, interaction, e, lang) {
                     {
                         name: "User",
                         value: `${interaction?.user?.tag} \`(${interaction?.user?.id})\``,
-                        inline: true,
+                        inline: true
                     },
                     {
                         name: "Guild",
                         value: `${interaction?.guild?.name} \`(${interaction?.guild?.id})\` - \`${interaction?.guild?.memberCount} members\``,
-                        inline: true,
+                        inline: true
                     },
                     {
                         name: "Time",
                         value: `<t:${Math.floor(Date.now() / 1000)}:R>`,
-                        inline: true,
+                        inline: true
                     },
                     {
                         name: "Command Usage Channel",
                         value: `${interaction?.channel?.name} \`(${interaction?.channel?.id})\``,
-                        inline: true,
+                        inline: true
                     },
                     {
                         name: "User Voice Channel",
                         value: `${interaction?.member?.voice?.channel?.name} \`(${interaction?.member?.voice?.channel?.id})\``,
-                        inline: true,
-                    },
+                        inline: true
+                    }
                 ]);
             client.shard.broadcastEval(
                 async (c, { channelId, embed }) => {
                     let channel = c.channels.cache.get(channelId);
-                    channel?.send({ embeds: [embed] }).catch((e) => {});
+                    channel?.send({ embeds: [embed] }).catch(e => {});
                 },
-                { context: { channelId: client?.errorLog, embed: embed } },
+                { context: { channelId: client?.errorLog, embed: embed } }
             );
         } else {
             let embed = new EmbedBuilder()
@@ -52,33 +52,33 @@ function errorNotifer(client, interaction, e, lang) {
                     {
                         name: "User",
                         value: `${interaction?.user?.tag} \`(${interaction?.user?.id})\``,
-                        inline: true,
+                        inline: true
                     },
                     {
                         name: "Guild",
                         value: `${interaction?.guild?.name} \`(${interaction?.guild?.id})\``,
-                        inline: true,
+                        inline: true
                     },
                     {
                         name: "Time",
                         value: `<t:${Math.floor(Date.now() / 1000)}:R>`,
-                        inline: true,
+                        inline: true
                     },
                     {
                         name: "Command Usage Channel",
                         value: `${interaction?.channel?.name} \`(${interaction?.channel?.id})\``,
-                        inline: true,
+                        inline: true
                     },
                     {
                         name: "User Voice Channel",
                         value: `${interaction?.member?.voice?.channel?.name} \`(${interaction?.member?.voice?.channel?.id})\``,
-                        inline: true,
-                    },
+                        inline: true
+                    }
                 ]);
             client.channels.cache
                 .get(client?.errorLog)
                 ?.send({ embeds: [embed] })
-                .catch((e) => {});
+                .catch(e => {});
         }
     } else {
         console.log(`
@@ -90,9 +90,7 @@ function errorNotifer(client, interaction, e, lang) {
     User Voice Channel: ${interaction?.member?.voice?.channel?.name} (${interaction?.member?.voice?.channel?.id})
     `);
     }
-    return interaction
-        .reply({ content: `${lang.error}\n\`${e}\``, ephemeral: true })
-        .catch((e) => {});
+    return interaction.reply({ content: `${lang.error}\n\`${e}\``, ephemeral: true }).catch(e => {});
 }
 
 module.exports = errorNotifer;

@@ -1,9 +1,4 @@
-const {
-    EmbedBuilder,
-    ActionRowBuilder,
-    ButtonBuilder,
-    ButtonStyle,
-} = require("discord.js");
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 const db = require("../mongoDB");
 module.exports = {
     name: "nowplaying",
@@ -12,7 +7,7 @@ module.exports = {
     options: [],
     run: async (client, interaction) => {
         let lang = await db?.musicbot?.findOne({
-            guildID: interaction.guild.id,
+            guildID: interaction.guild.id
         });
         lang = lang?.language || client.language;
         lang = require(`../languages/${lang}.js`);
@@ -20,15 +15,10 @@ module.exports = {
         try {
             const queue = client.player.getQueue(interaction.guild.id);
             if (!queue || !queue.playing)
-                return interaction
-                    .reply({ content: lang.msg5, ephemeral: true })
-                    .catch((e) => {});
+                return interaction.reply({ content: lang.msg5, ephemeral: true }).catch(e => {});
 
             const track = queue.songs[0];
-            if (!track)
-                return interaction
-                    .reply({ content: lang.msg5, ephemeral: true })
-                    .catch((e) => {});
+            if (!track) return interaction.reply({ content: lang.msg5, ephemeral: true }).catch(e => {});
 
             const embed = new EmbedBuilder();
             embed.setColor(client.config.embedColor);
@@ -37,13 +27,7 @@ module.exports = {
             embed.setDescription(`> Audio \`%${queue.volume}\`
 > Duration \`${track.formattedDuration}\`
 > URL: **${track.url}**
-> Loop Mode \`${
-                queue.repeatMode
-                    ? queue.repeatMode === 2
-                        ? "All Queue"
-                        : "This Song"
-                    : "Off"
-            }\`
+> Loop Mode \`${queue.repeatMode ? (queue.repeatMode === 2 ? "All Queue" : "This Song") : "Off"}\`
 > Filter: \`${queue.filters.names.join(", ") || "Off"}\`
 > By: <@${track.user.id}>`);
 
@@ -57,12 +41,10 @@ module.exports = {
 
             const row = new ActionRowBuilder().addComponents(saveButton);
 
-            interaction
-                .reply({ embeds: [embed], components: [row] })
-                .catch((e) => {});
+            interaction.reply({ embeds: [embed], components: [row] }).catch(e => {});
         } catch (e) {
             const errorNotifer = require("../functions.js");
             errorNotifer(client, interaction, e, lang);
         }
-    },
+    }
 };

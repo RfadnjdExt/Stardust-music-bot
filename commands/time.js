@@ -1,9 +1,4 @@
-const {
-    EmbedBuilder,
-    ActionRowBuilder,
-    ButtonBuilder,
-    ButtonStyle,
-} = require("discord.js");
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require("discord.js");
 const db = require("../mongoDB");
 module.exports = {
     name: "time",
@@ -12,7 +7,7 @@ module.exports = {
     options: [],
     run: async (client, interaction) => {
         let lang = await db?.musicbot?.findOne({
-            guildID: interaction.guild.id,
+            guildID: interaction.guild.id
         });
         lang = lang?.language || client.language;
         lang = require(`../languages/${lang}.js`);
@@ -21,9 +16,7 @@ module.exports = {
             const queue = client.player.getQueue(interaction.guild.id);
 
             if (!queue || !queue.playing)
-                return interaction
-                    .reply({ content: lang.msg5, ephemeral: true })
-                    .catch((e) => {});
+                return interaction.reply({ content: lang.msg5, ephemeral: true }).catch(e => {});
 
             const saveButton = new ButtonBuilder();
             saveButton.setLabel(lang.msg86);
@@ -40,16 +33,12 @@ module.exports = {
                 .setTitle(queue.songs[0].name)
                 .setThumbnail(queue.songs[0].thumbnail)
                 .setTimestamp()
-                .setDescription(
-                    `**${queue.formattedCurrentTime} / ${queue.formattedDuration} (${music_percent3}%)**`,
-                )
+                .setDescription(`**${queue.formattedCurrentTime} / ${queue.formattedDuration} (${music_percent3}%)**`)
                 .setFooter({ text: client.user.username });
-            interaction
-                .reply({ embeds: [embed], components: [row] })
-                .catch((e) => {});
+            interaction.reply({ embeds: [embed], components: [row] }).catch(e => {});
         } catch (e) {
             const errorNotifer = require("../functions.js");
             errorNotifer(client, interaction, e, lang);
         }
-    },
+    }
 };

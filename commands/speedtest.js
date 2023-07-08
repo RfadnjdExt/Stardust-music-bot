@@ -11,13 +11,13 @@ module.exports = {
             .setColor(0xffff00)
             .setDescription("The Speedtest is running, please wait a bit.")
             .setThumbnail(
-                "https://store-images.s-microsoft.com/image/apps.52586.13510798887693184.740d7baf-50aa-4e26-adec-ae739ac12068.c9ef9495-f245-4367-872b-c5cc7b48841d",
+                "https://store-images.s-microsoft.com/image/apps.52586.13510798887693184.740d7baf-50aa-4e26-adec-ae739ac12068.c9ef9495-f245-4367-872b-c5cc7b48841d"
             )
             .setImage("https://b.cdnst.net/images/share-logo.png")
             .setFooter({ text: "This takes approximately 30 seconds." });
 
         const waitingMessage = await interaction.reply({
-            embeds: [waitingEmbed],
+            embeds: [waitingEmbed]
         });
 
         try {
@@ -26,11 +26,11 @@ module.exports = {
                 .setTitle("Speedtest")
                 .setColor(0xffff00)
                 .setDescription(
-                    `The Speedtest is done, here is the result:\n\nServer: ${speed.server.name} | ${speed.server.location} | ID: ${speed.server.id}\nPacket-Loss: ${speed.packetLoss}`,
+                    `The Speedtest is done, here is the result:\n\nServer: ${speed.server.name} | ${speed.server.location} | ID: ${speed.server.id}\nPacket-Loss: ${speed.packetLoss}`
                 )
                 .setFooter({ text: "The used Speedtest is speedtest.net" })
                 .setThumbnail(
-                    "https://store-images.s-microsoft.com/image/apps.52586.13510798887693184.740d7baf-50aa-4e26-adec-ae739ac12068.c9ef9495-f245-4367-872b-c5cc7b48841d",
+                    "https://store-images.s-microsoft.com/image/apps.52586.13510798887693184.740d7baf-50aa-4e26-adec-ae739ac12068.c9ef9495-f245-4367-872b-c5cc7b48841d"
                 )
                 .setImage(`${speed.result.url}.png`);
 
@@ -40,12 +40,10 @@ module.exports = {
             const errorEmbed = new EmbedBuilder()
                 .setTitle("Speedtest")
                 .setColor(0xff0000)
-                .setDescription(
-                    "An error occurred while running the Speedtest. Please try again later.",
-                )
+                .setDescription("An error occurred while running the Speedtest. Please try again later.")
                 .setFooter({ text: "Error occurred during the Speedtest." });
 
             interaction.editReply({ embeds: [errorEmbed] });
         }
-    },
+    }
 };

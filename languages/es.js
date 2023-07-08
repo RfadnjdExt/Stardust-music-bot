@@ -149,6 +149,6 @@ const language = {
     msg134: "Uso incorrecto. Ejemplo: `5:50` | `1:12:43`",
     msg135: "El tiempo de reproducción se estableció en {queue.formattedCurrentTime} con éxito",
     msg136: "Autoplay está activado. Ahora voy a activar música aleatoria.",
-    msg137: "Autoplay está desactivado ahora.",
+    msg137: "Autoplay está desactivado ahora."
 };
 module.exports = language;

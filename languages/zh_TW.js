@@ -149,6 +149,6 @@ const language = {
     msg134: "用法不正确確。示例：`5:50` | `1:12:43`",
     msg135: "播放時間已成功設定為 {queue.formattedCurrentTime}",
     msg136: "自動播放現已打開。從現在在開始我要開啟隨機音樂。",
-    msg137: "自動播放現已關閉。",
+    msg137: "自動播放現已關閉。"
 };
 module.exports = language;

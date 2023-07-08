@@ -1,6 +1,6 @@
 {
     "name": "stardustmusicbot",
-    "version": "15.5.0",
+    "version": "15.6.0",
     "description": "discord.js v14.11 music bot. for slash commands",
     "main": "index.js",
     "dependencies": {
@@ -30,15 +30,24 @@
         "sapphire": "^0.0.3",
         "shell-quote": "^1.8.1",
         "speedtest-net": "^2.2.0",
-        "topgg-autoposter": "^2.0.1"
+        "topgg-autoposter": "^2.0.1",
+        "prettier": "^3.0.0"
+    },
+    "prettier": {
+        "tabWidth": 4,
+        "trailingComma": "none",
+        "arrowParens": "avoid",
+        "printWidth": 120
     },
     "scripts": {
         "start": "node start.js",
-        "dev": "nodemon start.js"
+        "dev": "nodemon start.js",
+        "pretty": "prettier --check */*.js",
+        "pretty:write": "prettier --write */*.js"
     },
     "author": "Rizki Pratama",
     "license": "ISC",
     "engines": {
-        "node": "18.x"
+        "node": ">=18.x"
     }
 }

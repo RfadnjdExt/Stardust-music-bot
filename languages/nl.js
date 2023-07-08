@@ -149,6 +149,6 @@ const language = {
     msg134: "Onjuist gebruik. Voorbeeld: `5:50` | `1:12:43`",
     msg135: "Speeltijd is succesvol ingesteld op {queue.formattedCurrentTime}",
     msg136: "Automatisch afspelen is nu ingeschakeld. Ik ga vanaf nu willekeurige muziek aanzetten.",
-    msg137: "Automatisch afspelen is momenteel uitgeschakeld.",
+    msg137: "Automatisch afspelen is momenteel uitgeschakeld."
 };
 module.exports = language;

@@ -1,10 +1,4 @@
-const {
-    Client,
-    GatewayIntentBits,
-    Partials,
-    EmbedBuilder,
-    embedLength,
-} = require("discord.js");
+const { Client, GatewayIntentBits, Partials, EmbedBuilder, embedLength } = require("discord.js");
 const { DisTube } = require("distube");
 const { SpotifyPlugin } = require("@distube/spotify");
 const { SoundCloudPlugin } = require("@distube/soundcloud");
@@ -17,7 +11,7 @@ const client = new Client({
     partials: [
         Partials.Channel, // for text channel
         Partials.GuildMember, // for guild member
-        Partials.User, // for discord user
+        Partials.User // for discord user
     ],
     intents: [
         GatewayIntentBits.Guilds, // for guild related things
@@ -25,8 +19,8 @@ const client = new Client({
         GatewayIntentBits.MessageContent,
         GatewayIntentBits.GuildMembers, // for guild members related things
         GatewayIntentBits.GuildIntegrations, // for discord Integrations
-        GatewayIntentBits.GuildVoiceStates, // for voice related things
-    ],
+        GatewayIntentBits.GuildVoiceStates // for voice related things
+    ]
 });
 
 client.config = config;
@@ -36,12 +30,7 @@ client.player = new DisTube(client, {
     emitNewSongOnly: true,
     emitAddSongWhenCreatingQueue: false,
     emitAddListWhenCreatingQueue: false,
-    plugins: [
-        new SpotifyPlugin(),
-        new SoundCloudPlugin(),
-        new YtDlpPlugin(),
-        new DeezerPlugin(),
-    ],
+    plugins: [new SpotifyPlugin(), new SoundCloudPlugin(), new YtDlpPlugin(), new DeezerPlugin()]
 });
 
 const player = client.player;
@@ -49,7 +38,7 @@ client.language = config.language || "en";
 let lang = require(`./languages/${config.language || "en"}.js`);
 
 fs.readdir("./events", (_err, files) => {
-    files.forEach((file) => {
+    files.forEach(file => {
         if (!file.endsWith(".js")) return;
         const event = require(`./events/${file}`);
         let eventName = file.split(".")[0];
@@ -60,7 +49,7 @@ fs.readdir("./events", (_err, files) => {
 });
 
 fs.readdir("./events/player", (_err, files) => {
-    files.forEach((file) => {
+    files.forEach(file => {
         if (!file.endsWith(".js")) return;
         const player_events = require(`./events/player/${file}`);
         let playerName = file.split(".")[0];
@@ -73,14 +62,14 @@ fs.readdir("./events/player", (_err, files) => {
 client.commands = [];
 fs.readdir(config.commandsDir, (err, files) => {
     if (err) throw err;
-    files.forEach(async (f) => {
+    files.forEach(async f => {
         try {
             if (f.endsWith(".js")) {
                 let props = require(`${config.commandsDir}/${f}`);
                 client.commands.push({
                     name: props.name,
                     description: props.description,
-                    options: props.options,
+                    options: props.options
                 });
                 console.log(`${lang.loadcmd}: ${props.name}`);
             }
@@ -91,13 +80,13 @@ fs.readdir(config.commandsDir, (err, files) => {
 });
 
 // * LOG MESSAGE DELETION
-client.on("messageDelete", async (message) => {
+client.on("messageDelete", async message => {
     const msgDeleteEmbed = new EmbedBuilder()
         .setColor(0xff0000)
         .setTitle("Message Delete")
         .setAuthor({
             name: `${message.author.username}`,
-            iconURL: message.author.displayAvatarURL(),
+            iconURL: message.author.displayAvatarURL()
         })
         .addFields({ name: "Content", value: `> ${message.content}` })
         .addFields({ name: "Channel", value: `<#${message.channel.id}>` })
@@ -105,14 +94,14 @@ client.on("messageDelete", async (message) => {
             {
                 name: "Username",
                 value: `<@${message.author.id}>`,
-                inline: true,
+                inline: true
             },
             { name: "User ID", value: message.author.id, inline: true },
-            { name: "Message ID", value: message.id, inline: true },
+            { name: "Message ID", value: message.id, inline: true }
             // message.author.username
         );
 
-    message.attachments.forEach((attachment) => {
+    message.attachments.forEach(attachment => {
         msgDeleteEmbed.addFields({ name: "Attachment", value: attachment.url });
     });
 
@@ -121,7 +110,7 @@ client.on("messageDelete", async (message) => {
     const channel = await client.channels.fetch(deletedChannelId);
     channel.send({
         content: `DELETE: \`${message.author.username}\` (${message.author.id})`,
-        embeds: [msgDeleteEmbed],
+        embeds: [msgDeleteEmbed]
     });
 });
 
@@ -132,7 +121,7 @@ client.on("messageUpdate", async (oldMsg, newMsg) => {
         .setTitle("Message Edit")
         .setAuthor({
             name: `${oldMsg.author.username}`,
-            iconURL: oldMsg.author.displayAvatarURL(),
+            iconURL: oldMsg.author.displayAvatarURL()
         })
         .addFields({ name: "Old Content", value: `> ${oldMsg.content}` })
         .addFields({ name: "New Content", value: `> ${newMsg.content}` })
@@ -140,11 +129,11 @@ client.on("messageUpdate", async (oldMsg, newMsg) => {
         .addFields(
             { name: "Username", value: `<@${oldMsg.author.id}>`, inline: true },
             { name: "User ID", value: oldMsg.author.id, inline: true },
-            { name: "Message ID", value: oldMsg.id, inline: true },
+            { name: "Message ID", value: oldMsg.id, inline: true }
             // oldMsg.author.username
         );
 
-    oldMsg.attachments.forEach((attachment) => {
+    oldMsg.attachments.forEach(attachment => {
         msgEditEmbed.addFields({ name: "Attachment", value: attachment.url });
     });
 
@@ -153,12 +142,12 @@ client.on("messageUpdate", async (oldMsg, newMsg) => {
     const channel = await client.channels.fetch(editedChannelId);
     channel.send({
         content: `EDIT: \`${oldMsg.author.username}\` (${oldMsg.author.id})`,
-        embeds: [msgEditEmbed],
+        embeds: [msgEditEmbed]
     });
 });
 
 if (config.TOKEN || process.env.TOKEN) {
-    client.login(config.TOKEN || process.env.TOKEN).catch((e) => {
+    client.login(config.TOKEN || process.env.TOKEN).catch(e => {
         console.log(lang.error1);
     });
 } else {
@@ -172,12 +161,12 @@ if (config.mongodbURL || process.env.MONGO) {
     mongoose
         .connect(config.mongodbURL || process.env.MONGO, {
             useNewUrlParser: true,
-            useUnifiedTopology: true,
+            useUnifiedTopology: true
         })
         .then(async () => {
             console.log(`Connected MongoDB`);
         })
-        .catch((err) => {
+        .catch(err => {
             console.log("\nMongoDB Error: " + err + "\n\n" + lang.error4);
         });
 } else {
