@@ -1,3 +1,4 @@
+const { Message } = require("discord.js");
 const mongoose = require("mongoose");
 const { Schema, model } = require("mongoose");
 
@@ -12,6 +13,10 @@ const playlist = Schema({
     userID: String,
     playlist: Array,
     musics: Array
+});
+
+const snipe = Schema({
+    messageContent: String
 });
 
 const mongoUrl = "mongodb://localhost:27017/mydatabase";
@@ -34,6 +39,7 @@ db.on("error", err => {
 module.exports = {
     musicbot: model("musicbot", musicbot),
     playlist: model("playlist", playlist),
+    snipe: model("snipe", snipe),
     connectToDB: function () {
         mongoose.connect(mongoUrl, options);
     }
