@@ -1,4 +1,4 @@
-const { ApplicationCommandOptionType, EmbedBuilder } = require("discord.js");
+const { ApplicationCommandOptionType } = require("discord.js");
 const db = require("../mongoDB");
 module.exports = {
     name: "play",

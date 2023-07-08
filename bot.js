@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits, Partials, EmbedBuilder, embedLength } = require("discord.js");
+const { Client, GatewayIntentBits, Partials, EmbedBuilder } = require("discord.js");
 const { DisTube } = require("distube");
 const { SpotifyPlugin } = require("@distube/spotify");
 const { SoundCloudPlugin } = require("@distube/soundcloud");
@@ -7,6 +7,8 @@ const { YtDlpPlugin } = require("@distube/yt-dlp");
 const { editedChannelId, deletedChannelId } = require("./config.js");
 const config = require("./config.js");
 const fs = require("fs");
+const mongoDB = require("../mongoDB");
+
 const client = new Client({
     partials: [
         Partials.Channel, // for text channel
@@ -51,10 +53,10 @@ fs.readdir("./events", (_err, files) => {
 fs.readdir("./events/player", (_err, files) => {
     files.forEach(file => {
         if (!file.endsWith(".js")) return;
-        const player_events = require(`./events/player/${file}`);
+        const playerEvents = require(`./events/player/${file}`);
         let playerName = file.split(".")[0];
         console.log(`${lang.loadevent}: ${playerName}`);
-        player.on(playerName, player_events.bind(null, client));
+        player.on(playerName, playerEvents.bind(null, client));
         delete require.cache[require.resolve(`./events/player/${file}`)];
     });
 });
@@ -62,16 +64,16 @@ fs.readdir("./events/player", (_err, files) => {
 client.commands = [];
 fs.readdir(config.commandsDir, (err, files) => {
     if (err) throw err;
-    files.forEach(async f => {
+    files.forEach(async file => {
         try {
-            if (f.endsWith(".js")) {
-                let props = require(`${config.commandsDir}/${f}`);
+            if (file.endsWith(".js")) {
+                let command = require(`${config.commandsDir}/${file}`);
                 client.commands.push({
-                    name: props.name,
-                    description: props.description,
-                    options: props.options
+                    name: command.name,
+                    description: command.description,
+                    options: command.options
                 });
-                console.log(`${lang.loadcmd}: ${props.name}`);
+                console.log(`${lang.loadcmd}: ${command.name}`);
             }
         } catch (err) {
             console.log(err);
@@ -115,25 +117,25 @@ client.on("messageDelete", async message => {
 });
 
 // * LOG MESSAGE EDIT
-client.on("messageUpdate", async (oldMsg, newMsg) => {
+client.on("messageUpdate", async (oldMessage, newMessage) => {
     const msgEditEmbed = new EmbedBuilder()
         .setColor(0x0000ff)
         .setTitle("Message Edit")
         .setAuthor({
-            name: `${oldMsg.author.username}`,
-            iconURL: oldMsg.author.displayAvatarURL()
+            name: `${oldMessage.author.username}`,
+            iconURL: oldMessage.author.displayAvatarURL()
         })
-        .addFields({ name: "Old Content", value: `> ${oldMsg.content}` })
-        .addFields({ name: "New Content", value: `> ${newMsg.content}` })
-        .addFields({ name: "Channel", value: `<#${oldMsg.channel.id}>` })
+        .addFields({ name: "Old Content", value: `> ${oldMessage.content}` })
+        .addFields({ name: "New Content", value: `> ${newMessage.content}` })
+        .addFields({ name: "Channel", value: `<#${oldMessage.channel.id}>` })
         .addFields(
-            { name: "Username", value: `<@${oldMsg.author.id}>`, inline: true },
-            { name: "User ID", value: oldMsg.author.id, inline: true },
-            { name: "Message ID", value: oldMsg.id, inline: true }
-            // oldMsg.author.username
+            { name: "Username", value: `<@${oldMessage.author.id}>`, inline: true },
+            { name: "User ID", value: oldMessage.author.id, inline: true },
+            { name: "Message ID", value: oldMessage.id, inline: true }
+            // oldMessage.author.username
         );
 
-    oldMsg.attachments.forEach(attachment => {
+    oldMessage.attachments.forEach(attachment => {
         msgEditEmbed.addFields({ name: "Attachment", value: attachment.url });
     });
 
@@ -141,20 +143,41 @@ client.on("messageUpdate", async (oldMsg, newMsg) => {
 
     const channel = await client.channels.fetch(editedChannelId);
     channel.send({
-        content: `EDIT: \`${oldMsg.author.username}\` (${oldMsg.author.id})`,
+        content: `EDIT: \`${oldMessage.author.username}\` (${oldMessage.author.id})`,
         embeds: [msgEditEmbed]
     });
 });
 
 if (config.TOKEN || process.env.TOKEN) {
     client.login(config.TOKEN || process.env.TOKEN).catch(e => {
-        console.log(lang.error1);
-    });
+    console.log(lang.error1);
+});
 } else {
     setTimeout(() => {
         console.log(lang.error2);
     }, 2000);
 }
+
+const removeOldDocuments = async () => {
+    try {
+        const twentyFourHoursAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+        await mongoDB.snipe.deleteMany({ createdAt: { $lt: twentyFourHoursAgo } });
+        console.log("Old documents removed successfully.");
+    } catch (error) {
+        console.error("Error removing old documents:", error);
+    }
+};
+
+const scheduleRemoval = () => {
+    const now = new Date();
+    const nextMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+    const timeUntilMidnight = nextMidnight - now;
+
+    setTimeout(() => {
+        removeOldDocuments();
+        setInterval(removeOldDocuments, 24 * 60 * 60 * 1000); // Repeat every 24 hours
+    }, timeUntilMidnight);
+};
 
 if (config.mongodbURL || process.env.MONGO) {
     const mongoose = require("mongoose");
@@ -164,6 +187,7 @@ if (config.mongodbURL || process.env.MONGO) {
             useUnifiedTopology: true
         })
         .then(async () => {
+            scheduleRemoval();
             console.log(`Connected MongoDB`);
         })
         .catch(err => {
@@ -175,9 +199,7 @@ if (config.mongodbURL || process.env.MONGO) {
 
 const express = require("express");
 const app = express();
-const http = require("http");
-const { attachment } = require("express/lib/response.js");
-app.get("/", (request, response) => {
+app.get("/", (_request, response) => {
     response?.sendStatus(200);
 });
 app.listen(process?.env?.PORT);

@@ -1,4 +1,3 @@
-const { Message } = require("discord.js");
 const mongoose = require("mongoose");
 const { Schema, model } = require("mongoose");
 
@@ -15,9 +14,12 @@ const playlist = Schema({
     musics: Array
 });
 
-const snipe = Schema({
-    messageContent: String
-});
+const snipe = Schema(
+    {
+        messageContent: String
+    },
+    { timestamps: true }
+);
 
 const mongoUrl = "mongodb://localhost:27017/mydatabase";
 

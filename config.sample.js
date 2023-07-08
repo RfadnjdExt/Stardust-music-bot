@@ -12,7 +12,7 @@ module.exports = {
 
     sponsor: {
         status: true, //true or false
-        url: "", //write your discord sponsor url.
+        url: "" //write your discord sponsor url.
     },
 
     voteManager: {
@@ -37,34 +37,23 @@ module.exports = {
             "skip",
             "stop",
             "time",
-            "volume",
+            "volume"
         ], //write your use by vote commands.
-        vote_url: "", //write your top.gg vote url.
+        vote_url: "" //write your top.gg vote url.
     },
 
     shardManager: {
-        shardStatus: false, //If your bot exists on more than 1000 servers, change this part to true.
+        shardStatus: false //If your bot exists on more than 1000 servers, change this part to true.
     },
 
     playlistSettings: {
         maxPlaylist: 10, //max playlist count
-        maxMusic: 75, //max music count
+        maxMusic: 75 //max music count
     },
 
     opt: {
         DJ: {
-            commands: [
-                "back",
-                "clear",
-                "filter",
-                "loop",
-                "pause",
-                "resume",
-                "skip",
-                "stop",
-                "volume",
-                "shuffle",
-            ], //Please don't touch
+            commands: ["back", "clear", "filter", "loop", "pause", "resume", "skip", "stop", "volume", "shuffle"] //Please don't touch
         },
 
         voiceConfig: {
@@ -74,10 +63,10 @@ module.exports = {
             leaveOnEmpty: {
                 //The leaveOnEnd variable must be "false" to use this system.
                 status: true, //If this variable is "true", the bot will leave the channel when the bot is offline.
-                cooldown: 10000000, //1000 = 1 second
-            },
+                cooldown: 10000000 //1000 = 1 second
+            }
         },
 
-        maxVol: 150, //You can specify the maximum volume level.
-    },
+        maxVol: 150 //You can specify the maximum volume level.
+    }
 };
