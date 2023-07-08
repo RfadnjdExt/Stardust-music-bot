@@ -1,6 +1,6 @@
 # [Stardust Music Bot](https://discord.com/api/oauth2/authorize?client_id=817408723571179550&permissions=8&scope=bot%20applications.commands)
 
-![](https://cdn.discordapp.com/avatars/817408723571179550/95b5e2b76f24c250d217050019da0795.webp?size=1024)
+![](https://cdn.discordapp.com/avatars/817408723571179550/9c0ea43166ef4234a0a3a5cfa5e9253a.webp?size=1024)
 
 ## Tentang bot:
 
