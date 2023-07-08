@@ -5,7 +5,7 @@ module.exports = {
     name: "speedtest",
     description: "Speed hosting bot",
     permissions: "0x0000000000000800",
-    run: async (client, interaction) => {
+    run: async (interaction) => {
         const waitingEmbed = new EmbedBuilder()
             .setTitle("Speedtest")
             .setColor(0xffff00)
