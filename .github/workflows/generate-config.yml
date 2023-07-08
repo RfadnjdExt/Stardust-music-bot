@@ -2,6 +2,8 @@ name: Generate Config
 on:
     push:
         branches: [main]
+permissions:
+    contents: write
 jobs:
     generate_config:
         runs-on: ubuntu-latest
